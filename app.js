@@ -402,13 +402,13 @@ function startButtonPressed()
 
     // --- GAME DATA ---
     // LOCATION
-    setLocation("Roc Town");
+    setLocation(centerPage,"Roc Town");
 
     // TOWN STAGE (LEVEL)
-    setTownStage(0);
+    setTownStage(centerPage,0);
 
     // DUNGEON STAGE (UNLOCKS)
-    setDungeonStage(0);
+    setDungeonStage(centerPage,0);
 
     // Expose sidenav options
     setMostSideNavToVisible(centerPage);
