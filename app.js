@@ -133,6 +133,10 @@ function setMostSideNavToVisible(centerPage)
     document.getElementById(centerPage.sidenavCreditsName).hidden = false;
 }
 
+
+// ----------------------- LOADERS --------------------------------
+
+
 // load the center page with the store html
 function loadMapSheet(centerPage)
 {
@@ -198,6 +202,10 @@ function loadCreditsSheet(centerPage)
     setAllCenterPagesToHidden(centerPage);
     document.getElementById(centerPage.creditsPageName).hidden = false;
 }
+
+
+// ----------------- SETTERS --------------------
+
 
 function setName(centerPage,name)
 {
@@ -269,21 +277,85 @@ function setArmor(centerPage,armor)
     playerData.armor = armor;
 }
 
-function addToInventory(centerPage,item)
+// add item to inventory. If it already exists, increment value by amount
+function addToInventory(centerPage,item,amount)
 {
     // update view
 
     // update data
     if(playerData.inventory[item])
     {
-        playerData.inventory[item] = playerData.inventory[item] + 1;
+        playerData.inventory[item] = playerData.inventory[item] + amount;
     }
     else
     {
-        playerData.inventory[item] = 1;
+        playerData.inventory[item] = amount;
     }
 }
 
+// add a skill. The value indicates the level of the skill. (Skill levels might be used later)
+function addToSkills(centerPage,skill)
+{
+    // update view
+
+    // update data
+    if(playerData.skills[skill])
+    {
+        playerData.skills[skill] = playerData.skills[skill] + 1;
+    }
+    else
+    {
+        playerData.skills[skill] = 1;
+    }
+}
+
+// increment kill counter. might be useful later
+function addToKills(centerPage)
+{
+    // update view
+
+    // update data
+    playerData.kills += 1;
+}
+
+// change character location
+function setLocation(centerPage,location)
+{
+    // update view
+    document.getElementById("sidenavMapName").innerHTML = location;
+
+    // update data
+    gameData.location = location;
+}
+
+// set town stage, or the level fo the town
+// 0 = decrepit, falling apart, missing buildings and people. Seer is present for beginning story. Dungeon 1 unlocked
+// 1 = carpenter comes, builds his store/house. can be used for thematically building others' stores/houses. Also unlocks dungeon 2
+// 2 = blacksmith comes, can upgrade armor and weapons, Also unlocks dungeon 3
+// 3 = Arena Master comes, player can fight by betting money and winning.
+function setTownStage(centerPage,stage)
+{
+    // update view
+
+    // update data
+    gameData.townStage = stage;
+}
+
+// set Dungeon stage
+// 1 = dungeon 1 unlocked
+// 2 = dungeon 2 unlocked
+// 3 = dungeon 3 unlocked
+function setDungeonStage(centerPage,stage)
+{
+    // update view
+
+    // update data
+    gameData.dungeonStage = stage;
+}
+
+
+
+// ------------------ INIT ---------------------
 // start menu start button pressed
 // if the user doesnt follow the 1 requirement of no commas we give them the name IdiotWithNoName (also if they dont type anything)
 function startButtonPressed()
@@ -293,6 +365,7 @@ function startButtonPressed()
     // centerPageTitle
     centerPage.title = document.getElementById(centerPage.titleName);
 
+    // NAME
     var userInputName = document.getElementById('startMainMenuName').value;
     if(userInputName && !userInputName.includes(','))
     {
@@ -305,22 +378,41 @@ function startButtonPressed()
         setName(centerPage,playerName)
     }
 
+    // HEALTH
     setHealth(centerPage,100);
-    setGold(centerPage,50);
-    setWeapon(centerPage,"Rusty Sword");
-    setArmor(centerPage,"Tattered Cloth");
-    console.log(playerData.inventory);
-    addToInventory(centerPage,"Health Potion");
-    addToInventory(centerPage,"Health Potion");
-    addToInventory(centerPage,"Inactive Bomb");
-    console.log(playerData.inventory);
-    playerData.skills = {"Rend":1};
-    playerData.totalKills = 0;
-    playerData.currentLocation = "Roc Town";
-    playerData.townStage = 0;
-    playerData.dungeonStage = 0;
 
+    // GOLD
+    setGold(centerPage,50);
+
+    // WEAPON
+    setWeapon(centerPage,"Rusty Sword");
+
+    // ARMOR
+    setArmor(centerPage,"Tattered Cloth");
+
+    // INVENTORY
+    addToInventory(centerPage,"Health Potion",2);
+    addToInventory(centerPage,"Inactive Bomb",1);
+
+    // SKILLS
+    addToSkills(centerPage,"Rend");
+
+    // KILLS
+    playerData.totalKills = 0;
+
+    // --- GAME DATA ---
+    // LOCATION
+    setLocation("Roc Town");
+
+    // TOWN STAGE (LEVEL)
+    setTownStage(0);
+
+    // DUNGEON STAGE (UNLOCKS)
+    setDungeonStage(0);
+
+    // Expose sidenav options
     setMostSideNavToVisible(centerPage);
 
+    // landing page after start
     loadMapSheet(centerPage);
 }
