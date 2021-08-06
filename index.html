@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!–– Made by Aaron Starr -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zhio Game ALPHA</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+
+<div id="centerPageBar">
+    <h1 id="centerPageTitle">Zhio's Game ALPHA</h1>
+</div>
+
+
+
+<body class="dark-theme">
+    <div id="mainMenu">
+        <p id="msg">Introduction:</p>
+        <p>This is a game, here is some things to look forward to in the game:</p>
+        <ul>
+            <li class="list">Terrible Balance</li>
+            <li class="list">Terrible Writing</li>
+            <li class="list">Terrible Game Design</li>
+            <li class="list">Terrible Art</li>
+            <li class="list">Terrible UI</li>
+            <li>A memorable experience</li>
+        </ul>
+        <p>
+            If you care; remember to save often, this is my first html/css/js game ever, so you've been warned.
+        </p><br>
+        <p>
+            Now that we have all the great things out of the way, we can get started.
+        </p>
+        <label>Name:</label>
+        <!–– could of done this with forms probably but it was not cooperating, so I did it the jank way -->
+        <input type="text" id="startMainMenuName" maxlength="16" placeholder="Max 16, no commas" pattern='^[^,]{1,16}$' required>
+        <button onclick="startButtonPressed();this.disabled=true;" class="button" id='startMainMenuButton' type="button">Start</button>
+        <p>
+            You can find the wiki here: <a class="hyperlink" href="https://www.google.com/" target="_blank">Zhio's HTML Game Wiki</a>
+        </p>
+        <p>
+            You can also click the game logo in the top left to go to the wiki.
+        </p><br>
+        <p>
+            TODO:
+        </p>
+        <ul>
+            <li>Save/Load system</li>
+            <li>Map functionality</li>
+            <li>Wiki</li>
+            <li>Pages for Sidebar stuff (skills, store, etc)</li>
+            <li>clean up UI</li>
+            <li>content that allows the game to be "played"</li>
+            <li>Difficulty settings</li>
+            <li>release Alpha version</li>
+        </ul>
+    </div>
+    <div id="mapPage" hidden>
+        <p id="msg">Map:</p>
+        <ul>
+            <table id="centerTable">
+                <tbody>
+                    <tr>
+                        <td class='sidenavTableRowImg'><img src="assets/mapSprite.svg" width="32" height="32"></td>
+                        <td class='sidenavTableRowName'><p>Map</p></td>
+                        <td class='sidenavTableRowDescription'><p id="TEST1"></p></td>
+                    </tr>
+                </tbody>
+            </table>
+        </ul>
+    </div>
+    <div id="characterPage" hidden>
+        <p id="msg">Character:</p>
+        <ul>
+            <table id="centerTable">
+                <tbody>
+                    <tr>
+                        <td class='sidenavTableRowImg'><img src="assets/characterSprite.svg" width="32" height="32"></td>
+                        <td class='sidenavTableRowName'><p>Character</p></td>
+                        <td class='sidenavTableRowDescription'><p id="TEST2"></p></td>
+                    </tr>
+                </tbody>
+            </table>
+        </ul>
+    </div>
+    <div id="inventoryPage" hidden>
+        <p id="msg">Inventory:</p>
+        <ul>
+            <table id="centerTable">
+                <tbody>
+                    <tr>
+                        <td class='sidenavTableRowImg'><img src="assets/inventorySprite.svg" width=32px height=32px></td>
+                        <td class='sidenavTableRowName'><p>Inventory</p></td>
+                        <td class='sidenavTableRowDescription'><p id="TEST3"></p></td>
+                    </tr>
+                </tbody>
+            </table>
+        </ul>
+    </div>
+    <div id="skillPage" hidden>
+        <p id="msg">Skills:</p>
+        <ul>
+            <table id="centerTable">
+                <tbody>
+                    <tr>
+                        <td class='sidenavTableRowImg'><img src="assets/skillSprite.svg" width=32px height=32px></td>
+                        <td class='sidenavTableRowName'><p>Skills</p></td>
+                        <td class='sidenavTableRowDescription'><p id="TEST4"></p></td>
+                    </tr>
+                </tbody>
+            </table>
+        </ul>
+    </div>
+    <div id="storePage" hidden>
+        <p id="msg">Store:</p>
+        <ul>
+            <table id="centerTable">
+                <tbody>
+                    <tr>
+                        <td class='sidenavTableRowImg'><img src="assets/Small_Brown_Bag.png" width=32px height=32px></td>
+                        <td class='sidenavTableRowName'><p>Store</p></td>
+                        <td class='sidenavTableRowDescription'><p id="TEST5">0 GP</p></td>
+                    </tr>
+                </tbody>
+            </table>
+        </ul>
+    </div>
+    <div id="creditsPage" hidden>
+        <br>
+        <p class="creditsTitle">Programming:</p>
+        <p>Aaron Starr</p>
+        <br>
+        <p class="creditsTitle">Game Design:</p>
+        <p>Aaron Starr</p>
+        <br>
+        <p class="creditsTitle">Art:</p>
+        <p>Aaron Starr</p>
+    </div>
+    <script src="app.js"></script>
+    <noscript>Your web browser needs to have JavaScript enabled to view the full site.</noscript>
+</body>
+
+
+
+
+<div id="gameNameBar">
+    <a class="hyperlink" href="https://www.google.com/" target="_blank"><img id="gameLogo" src="assets/gameLogo.svg"></a>
+</div>
+
+<div class="sidenav">
+
+    <table id="sidebarTable">
+        <tbody>
+            <tr onclick="sidenavRowClick(0)" id="sidenavMapRow" hidden>
+                <td class='sidenavTableRowImg'><img src="assets/mapSprite.svg" alt="mapSprite" width="32" height="32"></td>
+                <td class='sidenavTableRowName'><p>Map</p></td>
+                <td class='sidenavTableRowDescription'><p id="sidenavMapName">Roc Town</p></td>
+            </tr>
+            <tr onclick="sidenavRowClick(1)" id="sidenavCharacterRow" hidden>
+                <td class='sidenavTableRowImg'><img src="assets/characterSprite.svg" alt="characterSprite" width="32" height="32"></td>
+                <td class='sidenavTableRowName'><p>Character</p></td>
+                <td class='sidenavTableRowDescription'><p id="sidenavCharacterName">IdiotWithNoName</p><p id="sidenavHealth">0 HP</p></td>
+            </tr>
+            <tr onclick="sidenavRowClick(2)" id="sidenavInventoryRow" hidden>
+                <td class='sidenavTableRowImg'><img src="assets/inventorySprite.svg" alt="inventorySprite" width=32px height=32px></td>
+                <td class='sidenavTableRowName'><p>Inventory</p></td>
+                <td class='sidenavTableRowDescription'><p id="sidenavInventorySpace"></p></td>
+            </tr>
+            <tr onclick="sidenavRowClick(3)" id="sidenavSkillRow" hidden>
+                <td class='sidenavTableRowImg'><img src="assets/skillSprite.svg" alt="skillSprite" width=32px height=32px></td>
+                <td class='sidenavTableRowName'><p>Skills</p></td>
+                <td class='sidenavTableRowDescription'><p id="sidenavSkillPoints"></p></td>
+            </tr>
+            <tr onclick="sidenavRowClick(4)" id="sidenavStoreRow" hidden>
+                <td class='sidenavTableRowImg'><img src="assets/Small_Brown_Bag.png" alt="storeSprite" width=32px height=32px></td>
+                <td class='sidenavTableRowName'><p>Store</p></td>
+                <td class='sidenavTableRowDescription'><p id="sidenavGold">0 GP</p></td>
+            </tr>
+            <tr onclick="sidenavRowClick(5)" id="sidenavSaveRow" hidden>
+                <td class='sidenavTableRowImg'><img src="assets/saveFileSprite.svg" alt="saveSprite" width=32px height=32px></td>
+                <td class='sidenavTableRowName'><p>Save</p></td>
+                <td class='sidenavTableRowDescription'><p id="sidenavSave"></p></td>
+            </tr>
+            <tr onclick="sidenavRowClick(6)" id="sidenavLoadRow">
+                <td class='sidenavTableRowImg'><img src="assets/loadFileSprite.svg" alt="loadSprite" width=32px height=32px></td>
+                <td class='sidenavTableRowName'><p>Load</p></td>
+                <td class='sidenavTableRowDescription'><p id="sidenavLoad"></p></td>
+            </tr>
+            <tr onclick="sidenavRowClick(7)" id="sidenavCreditsRow" hidden>
+                <td class='sidenavTableRowImg'><img src="assets/creditsSprite.svg" alt="creditsSprite" width=32px height=32px></td>
+                <td class='sidenavTableRowName'><p>Credits</p></td>
+                <td class='sidenavTableRowDescription'><p id="sidenavCredits"></p></td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+
+</html>

@@ -1,0 +1,307 @@
+/* made by Aaron Starr */
+
+:root 
+{
+    --green-color: #00FF00;
+
+    --brown: #343131;
+    --black: #000000;
+    --white: #FFFFFF;
+
+    --lightgrey: #A4A4A9;
+    --middlegrey: #323942;
+    --darkgrey: #232A35;
+
+    --lightred: #943126;
+    --middlered: #922B21;
+    --darkred: #641E16;
+    --brightred: #FF0000;
+
+    --lightpurple: #A569BD;
+    --middlepurple: #6C3483;
+    --darkpurple: #4A235A;
+
+    --lightgreen: #82E0AA;
+    --middlegreen: #229954;
+    --darkgreen: #0B5345;
+
+    --lightyellow: #F9E79F;
+    --middleyellow: #F4D03F;
+    --darkyellow: #B7950B;
+
+    --gold: gold;
+
+    --lightorange: #EB984E;
+    --middleorange: #D35400;
+    --darkorange: #873600;
+
+    --lightblue: #5DADE2;
+    --middleblue: #21618C;
+    --darkblue: #154360;
+    --hyperlinkBlue: #968ef0;
+
+    --scrollBarColor1: #555555;
+    --scrollBarColor2: #444444;
+    --scrollBarColorBG: #a0a0a0;
+
+
+    --sidenav-Width: 320px;
+    --gameLogo-Height: 64px;
+}
+
+* {
+    color: var(--fontColor);
+    font-family: helvetica;
+}
+
+.hyperlink
+{
+    color: var(--hyperlinkBlue);
+    font-style: italic;
+}
+
+.button 
+{
+    padding: 15px 25px;
+    font-size: 24px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: var(--white);
+    background-color: var(--middlegreen);
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}
+  
+.button:hover 
+{
+      background-color: var(--darkgreen)
+}
+  
+.button:active 
+{
+    background-color: var(--lightgreen);
+    box-shadow: 0 5px var(--lightgrey);
+    transform: translateY(4px);
+}
+
+#startMainMenuName
+{
+    background-color: var(--lightgrey);
+    color: var(--white);
+}
+
+/* --------------------------------------------------------------------------- */
+/* scroll bar */
+
+/* width */
+::-webkit-scrollbar 
+{
+    width: 10px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track 
+{
+    background: var(--scrollBarColorBG);
+}
+  
+/* Handle */
+::-webkit-scrollbar-thumb 
+{
+    background: var(--scrollBarColor1);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover 
+{
+    background: var(--scrollBarColor2);
+}
+
+
+
+/* --------------------------------------------------------------------------- */
+/* Simple css to style dark mode */
+
+.dark-theme 
+{
+    --bg: var(--darkgrey);
+    --fontColor: var(--lightgrey);
+    --btnBg: var(--lightgrey);
+    --btnFontColor: var(--lightgrey);
+}
+
+/* ---------------------------------------------------------------- */
+/* SIDE NAVIGATION BAR */
+/* The sidebar menu */
+
+#gameNameBar 
+{
+    height: var(--gameLogo-Height);
+    width: var(--sidenav-Width); /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: var(--middlegrey); /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    overflow-y: hidden; /* Disable vertical scroll */
+    padding: 4px 0px 2px 0px; /* top, right, bottom, left */
+
+    /* user cannot highlight text */
+    -moz-user-select: none; 
+    -khtml-user-select: none; 
+    user-select: none;
+}
+
+#gameLogo
+{
+    height: var(--gameLogo-Height);
+    width: 128px; /* Set the width of the sidebar */
+    padding: 0px 96px 0px 96px; /* top, right, bottom, left */
+}
+
+.sidenav 
+{
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: var(--sidenav-Width); /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 0; /* dont Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: var(--black);
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: calc(var(--gameLogo-Height) + 10px);
+
+    /* user cannot highlight text */
+    -moz-user-select: none; 
+    -khtml-user-select: none; 
+    user-select: none;
+}
+
+#sidebarTable
+{
+    border-collapse: collapse;
+    cursor: pointer; /* change cursor to the hand pointer when over table */
+}
+
+span
+{
+    font-size: large;
+    padding: 0px 40px 0px 5px; /* top, right, bottom, left */
+}
+
+.sidenavTableRowImg
+{
+    padding: 8px 0px 6px 10px; /* top, right, bottom, left */
+    text-align: center;
+}
+
+.sidenavTableRowName
+{
+    padding: 8px 0px 6px 10px; /* top, right, bottom, left */
+    text-align: left;
+}
+
+.sidenavTableRowDescription
+{
+    padding: 8px 10px 6px 0px; /* top, right, bottom, left */
+    text-align: right; 
+    width: 100%;
+}
+
+#sidenavGold
+{
+    color: var(--gold);
+}
+
+#sidenavHealth
+{
+    color: var(--brightred);
+}
+
+tr:hover
+{
+    background-color:var(--middlegrey);
+}
+
+
+/* Style page content */
+.main 
+{
+    margin-left: var(--sidenav-Width); /* Same as the width of the sidebar */
+    padding: 0px 10px;
+}
+
+/* ----------------------------------------------------------------- */
+/* Center Page */
+
+body 
+{
+    background: var(--darkgrey);
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding: var(--gameLogo-Height) 0px 2px var(--sidenav-Width); /* top, right, bottom, left */
+
+    /* user cannot highlight text */
+    -moz-user-select: none; 
+    -khtml-user-select: none; 
+    user-select: none;
+
+}
+
+#centerPageBar 
+{
+    height: var(--gameLogo-Height);
+    width: 100%;
+    position: fixed;
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: var(--brown);
+    overflow-x: hidden; /* Disable horizontal scroll */
+    overflow-y: hidden; /* Disable vertical scroll */
+    padding: 4px 0px 2px var(--sidenav-Width); /* top, right, bottom, left */
+
+    /* user cannot highlight text */
+    -moz-user-select: none; 
+    -khtml-user-select: none; 
+    user-select: none;
+}
+
+#centerPageTitle
+{
+    width: 50%;
+    height: 32px;
+    padding: 0px 0px 0px 12px; /* top, right, bottom, left */
+}
+
+ul 
+{
+    font-family: helvetica;
+}
+
+li 
+{
+    list-style: circle;
+}
+
+.list 
+{
+    list-style: square;
+}
+
+/* make main menu html be populated at the startup */
+#mainMenu
+{
+    visibility: visible;
+}
+
+/* ------------------------------------------------------------------ */
+/* Credits Page */
+
+.creditsTitle
+{
+    color: var(--lightblue);
+    font-size: 20px;
+}
