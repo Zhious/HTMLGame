@@ -113,7 +113,7 @@
             </thead>
             <tbody>
                 <tr id="skillsPageRow1">
-                    <td class='skillsPageRowInfo'>
+                    <td class='skillsPageRowInfo' onclick="addToSkills('rend')" id="rendSkillBox">
                         <p><img src="assets/rendSkillSprite.svg" width=64px height=64px>
                             <div class="tooltip">
                                 Rend
@@ -125,7 +125,7 @@
                             </div>
                         </p>
                     </td>
-                    <td class='skillsPageRowInfo'>
+                    <td class='skillsPageRowInfo' onclick="addToSkills('block')" id="blockSkillBox">
                         <p><img src="assets/blockSkillSprite.svg" width=64px height=64px>
                             <div class="tooltip">
                                 Block
@@ -137,7 +137,7 @@
                             </div>
                         </p>
                     </td>
-                    <td class='skillsPageRowInfo'>
+                    <td class='skillsPageRowInfo' onclick="addToSkills('refinedTaste')" id="refinedtasteSkillBox">
                         <p><img src="assets/refinedTasteSkillSprite.svg" width=64px height=64px>
                             <div class="tooltip">
                                 Refined Taste
@@ -152,7 +152,7 @@
                 </tr>
 
                 <tr id="skillsPageRow2">
-                    <td class='skillsPageRowInfo'>
+                    <td class='skillsPageRowInfo' onclick="addToSkills('calculated')" id="calculatedSkillBox">
                         <p><img src="assets/calculatedSkillSprite.svg" width=64px height=64px>
                             <div class="tooltip">
                                 Calculated
@@ -164,7 +164,7 @@
                             </div>
                         </p>
                     </td>
-                    <td class='skillsPageRowInfo'>
+                    <td class='skillsPageRowInfo' onclick="addToSkills('disrepect')" id="disrepectSkillBox">
                         <p><img src="assets/disrespectSkillSprite.svg" width=64px height=64px>
                             <div class="tooltip">
                                 Disrepect
@@ -176,14 +176,14 @@
                             </div>
                         </p>
                     </td>
-                    <td class='skillsPageRowInfo'>
+                    <td class='skillsPageRowInfo' onclick="addToSkills('haggle')" id="haggleSkillBox">
                         <p><img src="assets/haggleSkillSprite.svg" width=64px height=64px>
                             <div class="tooltip">
                                 Haggle
                                 <span class="tooltipText">
                                     <div class="tooltipTitle">Passive</div>
                                     Haggle grants you a 
-                                    <div class="skillchangeText">25%</div> reduction in store prices.
+                                    <div class="skillchangeText">25%</div> reduction in store prices. Cannot remap this skill once taken.
                                 </span>
                             </div>
                         </p>
@@ -191,7 +191,7 @@
                 </tr>
 
                 <tr id="skillsPageRow3">
-                    <td class='skillsPageRowInfo'>
+                    <td class='skillsPageRowInfo' onclick="addToSkills('weighted')" id="weightedSkillBox">
                         <p><img src="assets/weightedSkillSprite.svg" width=64px height=64px>
                             <div class="tooltip">
                                 Weighted
@@ -203,7 +203,7 @@
                             </div>
                         </p>
                     </td>
-                    <td class='skillsPageRowInfo'>
+                    <td class='skillsPageRowInfo' onclick="addToSkills('training')" id="trainingSkillBox">
                         <p><img src="assets/trainingSkillSprite.svg" width=64px height=64px>
                             <div class="tooltip">
                                 Training
@@ -215,14 +215,14 @@
                             </div>
                         </p>
                     </td>
-                    <td class='skillsPageRowInfo'>
+                    <td class='skillsPageRowInfo' onclick="addToSkills('tempered')" id="temperedSkillBox">
                         <p><img src="assets/temperedSkillSprite.svg" width=64px height=64px>
                             <div class="tooltip">
                                 Tempered
                                 <span class="tooltipText">
                                     <div class="tooltipTitle">Passive</div>
-                                    Tempered full heals you before a
-                                    <div class="skillchangeText">boss</div> fight at the end of a dungeon.
+                                    Tempered heals you for 
+                                    <div class="skillchangeText">50%</div> before a boss fight at the end of a dungeon.
                                 </span>
                             </div>
                         </p>

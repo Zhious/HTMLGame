@@ -403,3 +403,13 @@ li
 {
     color: var(--middlegreen);
 }
+
+.skillsPageRowInfo
+{
+    cursor: pointer;
+}
+
+.skillsPageRowInfo:hover
+{
+    background-color:var(--middlegrey);
+}

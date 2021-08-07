@@ -13,7 +13,17 @@ const playerData = {
     weapon:"",
     armor:"",
     inventory:{},
-    skills:{},
+    skills:{
+        rend: 0,
+        block: 0,
+        refinedtaste: 0,
+        haggle: 0,
+        disrespect: 0,
+        calculated: 0,
+        weighted: 0,
+        training: 0,
+        tempered: 0,
+    },
     skillPoints:0,
     totalKills:0
 };
@@ -55,52 +65,51 @@ function CenterPageObj(title="")
     return obj;
 }
 
+//global var
+let centerPage = new CenterPageObj();
+// centerPageTitle
+centerPage.title = document.getElementById(centerPage.titleName);
+
 function sidenavRowClick(rowNum) 
 {
-
-    let centerPage = new CenterPageObj();
-
-    // centerPageTitle
-    centerPage.title = document.getElementById(centerPage.titleName);
-
     switch(rowNum)
     {
         case 0: // Character
-            loadMapSheet(centerPage);
+            loadMapSheet();
             break;
 
         case 1: // Character
-            loadCharacterSheet(centerPage);
+            loadCharacterSheet();
             break;
         
         case 2: // Inventory
-            loadInventorySheet(centerPage);
+            loadInventorySheet();
             break;
             
         case 3: // Skills
-            loadSkillsSheet(centerPage);
+            loadSkillsSheet();
             break;
             
         case 4: // Store
-            loadStoreSheet(centerPage);
+            loadStoreSheet();
             break;
 
         case 5: // Save
-            loadSave(centerPage);
+            loadSave();
             break;
 
         case 6: // Load
-            loadLoad(centerPage);
+            loadLoad();
             break;
 
         case 7: // Credits
-            loadCreditsSheet(centerPage);
+            loadCreditsSheet();
             break;
     }
 }
 
 // hide all center page setups
-function setAllCenterPagesToHidden(centerPage)
+function setAllCenterPagesToHidden()
 {
     document.getElementById(centerPage.mainMenuName).hidden = true;
     document.getElementById(centerPage.mapPageName).hidden = true;
@@ -112,7 +121,7 @@ function setAllCenterPagesToHidden(centerPage)
 }
 
 // Hide most sidenav buttons (exclusions apply; such as Save, Load, Credits)
-function setMostSideNavToHidden(centerPage)
+function setMostSideNavToHidden()
 {
     document.getElementById(centerPage.sidenavMapName).hidden = true;
     document.getElementById(centerPage.sidenavCharacterName).hidden = true;
@@ -123,7 +132,7 @@ function setMostSideNavToHidden(centerPage)
 }
 
 // Show most sidenav buttons (exclusions apply; such as Save, Load and Credits which are always visible)
-function setMostSideNavToVisible(centerPage)
+function setMostSideNavToVisible()
 {
     document.getElementById(centerPage.sidenavMapName).hidden = false;
     document.getElementById(centerPage.sidenavCharacterName).hidden = false;
@@ -139,7 +148,7 @@ function setMostSideNavToVisible(centerPage)
 
 
 // load the center page with the store html
-function loadMapSheet(centerPage)
+function loadMapSheet()
 {
     document.getElementById(centerPage.titleName).innerHTML = "Map";
 
@@ -148,7 +157,7 @@ function loadMapSheet(centerPage)
 }
 
 // expose the center page with the character html
-function loadCharacterSheet(centerPage)
+function loadCharacterSheet()
 {
     document.getElementById(centerPage.titleName).innerHTML = "Character";
 
@@ -157,7 +166,7 @@ function loadCharacterSheet(centerPage)
 }
 
 // load the center page with the inventory html
-function loadInventorySheet(centerPage)
+function loadInventorySheet()
 {
     document.getElementById(centerPage.titleName).innerHTML = "Inventory";
 
@@ -166,7 +175,7 @@ function loadInventorySheet(centerPage)
 }
 
 // load the center page with the skills html
-function loadSkillsSheet(centerPage)
+function loadSkillsSheet()
 {
     document.getElementById(centerPage.titleName).innerHTML = "Skills";
 
@@ -175,7 +184,7 @@ function loadSkillsSheet(centerPage)
 }
 
 // load the center page with the store html
-function loadStoreSheet(centerPage)
+function loadStoreSheet()
 {
     document.getElementById(centerPage.titleName).innerHTML = "Store";
 
@@ -184,19 +193,19 @@ function loadStoreSheet(centerPage)
 }
 
 // load, save system
-function loadSave(centerPage)
+function loadSave()
 {
     setMostSideNavToHidden(centerPage);
 }
 
 // load, load file system
-function loadLoad(centerPage)
+function loadLoad()
 {
     setMostSideNavToVisible(centerPage);
 }
 
 // load the center page with the credits html
-function loadCreditsSheet(centerPage)
+function loadCreditsSheet()
 {
     document.getElementById(centerPage.titleName).innerHTML = "Credits";
 
@@ -208,7 +217,7 @@ function loadCreditsSheet(centerPage)
 // ----------------- SETTERS --------------------
 
 
-function setName(centerPage,name)
+function setName(name)
 {
     // update view
     document.getElementById(centerPage.playerNameId).innerHTML = name;
@@ -218,7 +227,7 @@ function setName(centerPage,name)
 }
 
 
-function setHealth(centerPage,newHealth)
+function setHealth(newHealth)
 {
     // player death
     if(newHealth <= 0)
@@ -239,7 +248,7 @@ function setHealth(centerPage,newHealth)
     }
 }
 
-function setGold(centerPage,newGold)
+function setGold(newGold)
 {
     // update view
     document.getElementById("sidenavGold").innerHTML = newGold + " GP";
@@ -255,7 +264,7 @@ function setGold(centerPage,newGold)
 // Sharp Steel Sword - +9 Damage
 // Imbued Sword - +12 Damage
 // King's Sword - +15 Damage
-function setWeapon(centerPage,weapon)
+function setWeapon(weapon)
 {
     // update view
 
@@ -270,7 +279,7 @@ function setWeapon(centerPage,weapon)
 // Breast Plate - 3 Armor
 // Full Plate - 4 Armor
 // King's Plate - 5 Armor
-function setArmor(centerPage,armor)
+function setArmor(armor)
 {
     // update view
 
@@ -279,7 +288,7 @@ function setArmor(centerPage,armor)
 }
 
 // add item to inventory. If it already exists, increment value by amount
-function addToInventory(centerPage,item,amount)
+function addToInventory(item,amount)
 {
     // update view
 
@@ -294,7 +303,7 @@ function addToInventory(centerPage,item,amount)
     }
 }
 
-function setSkillPoints(centerPage,value)
+function setSkillPoints(value)
 {
     // update view
     document.getElementById("skillPageSkillPoints").innerHTML = value;
@@ -304,23 +313,40 @@ function setSkillPoints(centerPage,value)
 }
 
 // add a skill. The value indicates the level of the skill. (Skill levels might be used later)
-function addToSkills(centerPage,skill)
+// some wonkyness with js dictionary deletes menas i prepop the skill dict and base it on value
+function addToSkills(skill)
 {
-    // update view
+    let alreadyHasSkill = false;
 
     // update data
-    if(playerData.skills[skill])
+    for(let skillName in playerData.skills)
     {
-        playerData.skills[skill] = playerData.skills[skill] + 1;
+        if(playerData.skills[skill] >= 1)
+        {
+            alreadyHasSkill = true;
+        }
     }
-    else
+
+    if(!alreadyHasSkill && (playerData.skillPoints >= 1)) // doesnt have skill, add it and remove skillpoint
     {
         playerData.skills[skill] = 1;
+        setSkillPoints( (playerData.skillPoints - 1) )
+
+        // update view
+        document.getElementById(skill.toLowerCase() + "SkillBox").style.backgroundColor = "#0B5345";
+    }
+    else if( alreadyHasSkill && (skill.toLowerCase() != "haggle") ) // already has skill, so remove it and give back skillpoint
+    {
+        playerData.skills[skill] = 0;
+        setSkillPoints( (playerData.skillPoints + 1) )
+
+        // update view
+        document.getElementById(skill.toLowerCase() + "SkillBox").style.backgroundColor = "#232A35";
     }
 }
 
 // increment kill counter. might be useful later
-function addToKills(centerPage)
+function addToKills()
 {
     // update view
 
@@ -329,7 +355,7 @@ function addToKills(centerPage)
 }
 
 // change character location
-function setLocation(centerPage,location)
+function setLocation(location)
 {
     // update view
     document.getElementById("sidenavMapName").innerHTML = location;
@@ -343,7 +369,7 @@ function setLocation(centerPage,location)
 // 1 = carpenter comes, builds his store/house. can be used for thematically building others' stores/houses. Also unlocks dungeon 2
 // 2 = blacksmith comes, can upgrade armor and weapons, Also unlocks dungeon 3
 // 3 = Arena Master comes, player can fight by betting money and winning.
-function setTownStage(centerPage,stage)
+function setTownStage(stage)
 {
     // update view
 
@@ -355,7 +381,7 @@ function setTownStage(centerPage,stage)
 // 1 = dungeon 1 unlocked
 // 2 = dungeon 2 unlocked
 // 3 = dungeon 3 unlocked
-function setDungeonStage(centerPage,stage)
+function setDungeonStage(stage)
 {
     // update view
 
@@ -370,62 +396,59 @@ function setDungeonStage(centerPage,stage)
 // if the user doesnt follow the 1 requirement of no commas we give them the name IdiotWithNoName (also if they dont type anything)
 function startButtonPressed()
 {
-    let centerPage = new CenterPageObj();
+    //let centerPage = new CenterPageObj();
 
     // centerPageTitle
-    centerPage.title = document.getElementById(centerPage.titleName);
+    //centerPage.title = document.getElementById(centerPage.titleName);
 
     // NAME
     var userInputName = document.getElementById('startMainMenuName').value;
     if(userInputName && !userInputName.includes(','))
     {
         var playerName = document.getElementById('startMainMenuName').value;
-        setName(centerPage,playerName)
+        setName(playerName)
     }
     else
     {
         var playerName = "IdiotWithNoName"
-        setName(centerPage,playerName)
+        setName(playerName)
     }
 
     // HEALTH
-    setHealth(centerPage,100);
+    setHealth(100);
 
     // GOLD
-    setGold(centerPage,50);
+    setGold(50);
 
     // WEAPON
-    setWeapon(centerPage,"Rusty Sword");
+    setWeapon("Rusty Sword");
 
     // ARMOR
-    setArmor(centerPage,"Tattered Cloth");
+    setArmor("Tattered Cloth");
 
     // INVENTORY
-    addToInventory(centerPage,"Health Potion",2);
-    addToInventory(centerPage,"Inactive Bomb",1);
+    addToInventory("Health Potion",2);
+    addToInventory("Inactive Bomb",1);
 
     // SKILL POINTS
-    setSkillPoints(centerPage,0);
-
-    // SKILLS
-    addToSkills(centerPage,"Rend");
+    setSkillPoints(3);
 
     // KILLS
     playerData.totalKills = 0;
 
     // --- GAME DATA ---
     // LOCATION
-    setLocation(centerPage,"Roc Town");
+    setLocation("Roc Town");
 
     // TOWN STAGE (LEVEL)
-    setTownStage(centerPage,0);
+    setTownStage(0);
 
     // DUNGEON STAGE (UNLOCKS)
-    setDungeonStage(centerPage,0);
+    setDungeonStage(0);
 
     // Expose sidenav options
-    setMostSideNavToVisible(centerPage);
+    setMostSideNavToVisible();
 
     // landing page after start
-    loadMapSheet(centerPage);
+    loadMapSheet();
 }
