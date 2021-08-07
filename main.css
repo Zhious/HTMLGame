@@ -359,6 +359,11 @@ li
     text-align: center; 
 }
 
+.skillchangeText
+{
+    display: inline
+}
+
 .tooltip 
 {
     position: relative;

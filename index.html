@@ -100,6 +100,7 @@
         </ul>
     </div>
     <div id="skillPage" hidden>
+        <span><b>Available Skill Points:</b></span><span>0</span>
         <table id="skillsTable">
             <thead>
                 <tr>
@@ -117,7 +118,7 @@
                                 <span class="tooltipText">
                                     <div class="tooltipTitle">Passive</div>
                                     Rend grants your attacks a 
-                                    <div class="skillchangeText">20%</div>chance to apply a 1 damage bleed, that ticks every 1 second.
+                                    <div class="skillchangeText">20%</div> chance to give you a +1 damage bonus for 5 turns. (Does not refresh or stack)
                                 </span>
                             </div>
                         </p>
@@ -125,28 +126,107 @@
                     <td class='skillsPageRowInfo'>
                         <p><img src="assets/blockSkillSprite.svg" width=64px height=64px>
                             <div class="tooltip">
-                                Rend
+                                Block
                                 <span class="tooltipText">
                                     <div class="tooltipTitle">Passive</div>
                                     Block grants you a 
-                                    <div class="skillchangeText">10%</div>chance to take 50% damage when hit.
+                                    <div class="skillchangeText">10%</div> chance to take -50% damage when hit.
                                 </span>
                             </div>
                         </p>
                     </td>
                     <td class='skillsPageRowInfo'>
-                        <p><img src="assets/rendSkillSprite.svg" width=64px height=64px>
+                        <p><img src="assets/refinedTasteSkillSprite.svg" width=64px height=64px>
                             <div class="tooltip">
-                                Rend
+                                Refined Taste
                                 <span class="tooltipText">
                                     <div class="tooltipTitle">Passive</div>
-                                    Rend grants your attacks a 
-                                    <div class="skillchangeText">20%</div>chance to apply a 1 damage bleed, that ticks every 1 second.
+                                    Refined Taste makes your health potions heal for 
+                                    <div class="skillchangeText">10%</div> more of your max health.
                                 </span>
                             </div>
                         </p>
                     </td>
                 </tr>
+
+                <tr id="skillsPageRow1">
+                    <td class='skillsPageRowInfo'>
+                        <p><img src="assets/calculatedSkillSprite.svg" width=64px height=64px>
+                            <div class="tooltip">
+                                Calculated
+                                <span class="tooltipText">
+                                    <div class="tooltipTitle">Passive</div>
+                                    Calculated grants you a 
+                                    <div class="skillchangeText">5%</div> chance to attack twice.
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='skillsPageRowInfo'>
+                        <p><img src="assets/disrespectSkillSprite.svg" width=64px height=64px>
+                            <div class="tooltip">
+                                Disrepect
+                                <span class="tooltipText">
+                                    <div class="tooltipTitle">Passive</div>
+                                    Disrepect grants you a 
+                                    <div class="skillchangeText">5%</div> chance to heal you for 5% of your hp when hit.
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='skillsPageRowInfo'>
+                        <p><img src="assets/haggleSkillSprite.svg" width=64px height=64px>
+                            <div class="tooltip">
+                                Haggle
+                                <span class="tooltipText">
+                                    <div class="tooltipTitle">Passive</div>
+                                    Haggle grants you a 
+                                    <div class="skillchangeText">25%</div> reduction in store prices.
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                </tr>
+
+                <tr id="skillsPageRow1">
+                    <td class='skillsPageRowInfo'>
+                        <p><img src="assets/weightedSkillSprite.svg" width=64px height=64px>
+                            <div class="tooltip">
+                                Weighted
+                                <span class="tooltipText">
+                                    <div class="tooltipTitle">Passive</div>
+                                    Weighted grants your attacks 
+                                    <div class="skillchangeText">2</div> armor penetration against enemies.
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='skillsPageRowInfo'>
+                        <p><img src="assets/trainingSkillSprite.svg" width=64px height=64px>
+                            <div class="tooltip">
+                                Training
+                                <span class="tooltipText">
+                                    <div class="tooltipTitle">Passive</div>
+                                    Training grants you 
+                                    <div class="skillchangeText">+10 max HP</div> multipled by your armor stat.
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='skillsPageRowInfo'>
+                        <p><img src="assets/temperedSkillSprite.svg" width=64px height=64px>
+                            <div class="tooltip">
+                                Tempered
+                                <span class="tooltipText">
+                                    <div class="tooltipTitle">Passive</div>
+                                    Tempered full heals you before a
+                                    <div class="skillchangeText">boss</div> fight at the end of a dungeon.
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                </tr>
+
             </tbody>
         </table>
     </div>
