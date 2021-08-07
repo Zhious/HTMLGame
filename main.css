@@ -327,3 +327,73 @@ li
     vertical-align: middle; 
     text-align: center; 
 }
+
+/* ------------------------------------------------------------------ */
+/* Skills Page */
+
+#skillsTable
+{
+    border-collapse: collapse;
+    border: 1px solid var(--lightgrey);
+    padding: 30px 0px 0px 0px;/* top, right, bottom, left */
+}
+
+#skillsTable th
+{
+    color: var(--lightblue);
+    font-size: 20px;
+    border: 3px solid var(--lightgrey);
+}
+
+#skillsTable td 
+{
+    vertical-align: top;
+    text-align: center; 
+    border: 1px solid var(--lightgrey);
+}
+
+#skillsTable th 
+{
+    padding: 30px 50px 30px 50px;/* top, right, bottom, left */
+    vertical-align: middle; 
+    text-align: center; 
+}
+
+.tooltip 
+{
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted var(--lightgrey); /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltipText
+{
+    visibility: hidden;
+    width: 300px;
+    background-color: var(--black);
+    color: var(--white);
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.tooltip:hover .tooltipText 
+{
+    visibility: visible;
+}
+
+.tooltipTitle
+{
+    color: var(--middleorange);
+}
+
+.skillchangeText
+{
+    color: var(--middlegreen);
+}

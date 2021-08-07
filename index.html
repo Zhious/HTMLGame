@@ -100,18 +100,55 @@
         </ul>
     </div>
     <div id="skillPage" hidden>
-        <p id="msg">Skills:</p>
-        <ul>
-            <table id="centerTable">
-                <tbody>
-                    <tr>
-                        <td class='sidenavTableRowImg'><img src="assets/skillSprite.svg" width=32px height=32px></td>
-                        <td class='sidenavTableRowName'><p>Skills</p></td>
-                        <td class='sidenavTableRowDescription'><p id="TEST4"></p></td>
-                    </tr>
-                </tbody>
-            </table>
-        </ul>
+        <table id="skillsTable">
+            <thead>
+                <tr>
+                    <th rowspan="2">Damage</th>
+                    <th rowspan="2">Defense</th>
+                    <th rowspan="2">Support</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="skillsPageRow1">
+                    <td class='skillsPageRowInfo'>
+                        <p><img src="assets/rendSkillSprite.svg" width=64px height=64px>
+                            <div class="tooltip">
+                                Rend
+                                <span class="tooltipText">
+                                    <div class="tooltipTitle">Passive</div>
+                                    Rend grants your attacks a 
+                                    <div class="skillchangeText">20%</div>chance to apply a 1 damage bleed, that ticks every 1 second.
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='skillsPageRowInfo'>
+                        <p><img src="assets/blockSkillSprite.svg" width=64px height=64px>
+                            <div class="tooltip">
+                                Rend
+                                <span class="tooltipText">
+                                    <div class="tooltipTitle">Passive</div>
+                                    Block grants you a 
+                                    <div class="skillchangeText">10%</div>chance to take 50% damage when hit.
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='skillsPageRowInfo'>
+                        <p><img src="assets/rendSkillSprite.svg" width=64px height=64px>
+                            <div class="tooltip">
+                                Rend
+                                <span class="tooltipText">
+                                    <div class="tooltipTitle">Passive</div>
+                                    Rend grants your attacks a 
+                                    <div class="skillchangeText">20%</div>chance to apply a 1 damage bleed, that ticks every 1 second.
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div id="storePage" hidden>
         <p id="msg">Store:</p>
