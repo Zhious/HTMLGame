@@ -14,6 +14,7 @@ const playerData = {
     armor:"",
     inventory:{},
     skills:{},
+    skillPoints:0,
     totalKills:0
 };
 
@@ -293,6 +294,15 @@ function addToInventory(centerPage,item,amount)
     }
 }
 
+function setSkillPoints(centerPage,value)
+{
+    // update view
+    document.getElementById("skillPageSkillPoints").innerHTML = value;
+
+    // update data
+    playerData.skillPoints = value;
+}
+
 // add a skill. The value indicates the level of the skill. (Skill levels might be used later)
 function addToSkills(centerPage,skill)
 {
@@ -393,6 +403,9 @@ function startButtonPressed()
     // INVENTORY
     addToInventory(centerPage,"Health Potion",2);
     addToInventory(centerPage,"Inactive Bomb",1);
+
+    // SKILL POINTS
+    setSkillPoints(centerPage,0);
 
     // SKILLS
     addToSkills(centerPage,"Rend");
