@@ -22,14 +22,14 @@
         <p>This is a game, here are some things to look forward to in the game:</p>
         <ul>
             <li class="list">Terrible Balance</li>
-            <li class="list">Terrible Writing</li>
+            <li class="list">Terrible Writing (not implemented)</li>
             <li class="list">Terrible Game Design</li>
             <li class="list">Terrible Art</li>
             <li class="list">Terrible UI</li>
             <li>A memorable experience</li>
         </ul>
         <p>
-            If you care; remember to save often, this is my first html/css/js game ever, so you've been warned.
+            <b>If you care; remember to save often</b>, this is my first html/css/js game ever, so you've been warned.
         </p><br>
         <p>
             Now that we have all the great things out of the way, we can get started.
@@ -91,83 +91,89 @@
                 <tr id="characterPageRow1">
                     <td rowspan="2" id="characterPageImg">
                         <img src="assets/characterPageSpriteNaked.svg" width=128px height=256px>
-                        <p class='characterName'>IdiotWithNoName</p>
                     </td>
                     <td class='characterPageRowInfoName' id="characterPrimaryAttributeBox">
-                        <p>
-                            <div class="tooltip">
-                                Max HP
-                                <span class="tooltipText">
-                                    Taking damage reduces hp. <br>When at, or below, 0. You die.
-                                </span>
-                            </div>
-                            <br>
-                            <div class="tooltip">
-                                Armor
-                                <span class="tooltipText">
-                                    Each tier, above 0, reduces damage taken by 1.
-                                </span>
-                            </div>
-                            <br>
-                            <div class="tooltip">
-                                Weapon
-                                <span class="tooltipText">
-                                    Each tier, above 0, increases damage done by 3.
-                                </span>
-                            </div>
-                            <br>
-                            <div class="tooltip">
-                                Level
-                                <span class="tooltipText">
-                                    Gain a level, and a skillpoint, when experience reaches appropriate thresholds.
-                                </span>
-                            </div>
-                            <br>
-                            <div class="tooltip">
-                                Current XP
-                                <span class="tooltipText">
-                                    Gained by killing monsters or completing quests.
-                                </span>
-                            </div>
-                            <br>
-                            <div class="tooltip">
-                                XP To Level
-                                <span class="tooltipText">
-                                    Gained by killing monsters or completing quests.
-                                </span>
-                            </div>
-                        </p>
+                        <div class="tooltip">
+                            Name
+                            <span class="tooltipText">
+                                UwU
+                            </span>
+                        </div>
+                        <br>
+                        <div class="tooltip">
+                            Max HP
+                            <span class="tooltipText">
+                                Taking damage reduces hp. <br>When at, or below, 0. You die.
+                            </span>
+                        </div>
+                        <br>
+                        <div class="tooltip">
+                            Armor
+                            <span class="tooltipText">
+                                Each tier, above 0, reduces damage taken by 1.
+                            </span>
+                        </div>
+                        <br>
+                        <div class="tooltip">
+                            Weapon
+                            <span class="tooltipText">
+                                Each tier, above 0, increases damage done by 3.
+                            </span>
+                        </div>
+                        <br>
+                        <div class="tooltip">
+                            Level
+                            <span class="tooltipText">
+                                Gain a level, and a skillpoint, when experience reaches appropriate thresholds.
+                            </span>
+                        </div>
+                        <br>
+                        <div class="tooltip">
+                            Current XP
+                            <span class="tooltipText">
+                                Gained by killing monsters or completing quests.
+                            </span>
+                        </div>
+                        <br>
+                        <div class="tooltip">
+                            XP To Level
+                            <span class="tooltipText">
+                                Gained by killing monsters or completing quests.
+                            </span>
+                        </div>
                     </td>
                     <td class='characterPageRowInfoValue' id="characterPrimaryAttributeBox">
-                        <p>
-                            <div class="characterHealth"></div><div class="characterPageRowInfoValuePadding"></div>
-                            <div class="characterArmor"></div><div class="characterPageRowInfoValuePadding"></div>
-                            <div class="characterWeapon"></div><div class="characterPageRowInfoValuePadding"></div>
-                            <div class="characterLevel"></div><div class="characterPageRowInfoValuePadding"></div>
-                            <div class="characterXP"></div><div class="characterPageRowInfoValuePadding"></div>
-                            <div class="characterXPToNextLevel"></div>
-                        </p>
+                        <div class='characterName'></div><div class="characterPageRowInfoValuePadding"></div>
+                        <div class="characterHealth"></div><div class="characterPageRowInfoValuePadding"></div>
+                        <div class="characterArmor"></div><div class="characterPageRowInfoValuePadding"></div>
+                        <div class="characterWeapon"></div><div class="characterPageRowInfoValuePadding"></div>
+                        <div class="characterLevel"></div><div class="characterPageRowInfoValuePadding"></div>
+                        <div class="characterXP"></div><div class="characterPageRowInfoValuePadding"></div>
+                        <div class="characterXPToNextLevel"></div>
                     </td>
                 </tr>
-
             </tbody>
         </table>
     </div>
 
 
     <div id="inventoryPage" hidden>
-        <p id="msg">Inventory:</p>
-        <ul>
-            <table id="centerTable">
-                <tbody>
-                    <tr>
-                        <td class='sidenavTableRowImg'><img src="assets/inventorySprite.svg" width=32px height=32px></td>
-                        <td class='sidenavTableRowName'><p>Inventory</p></td>
-                        <td class='sidenavTableRowDescription'><p id="TEST3"></p></td>
-                    </tr>
-                </tbody>
-            </table>
-        </ul>
+        <table id="inventoryTable">
+            <thead>
+                <tr>
+                    <th rowspan="2">Item</th>
+                    <th rowspan="2">Amount</th>
+                    <th rowspan="2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class='sidenavTableRowImg'><img src="assets/inventorySprite.svg" width=32px height=32px></td>
+                    <td class='sidenavTableRowName'><p>Inventory</p></td>
+                    <td class='sidenavTableRowDescription'><p id="TEST3"></p></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
 

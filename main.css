@@ -461,3 +461,34 @@ li
 {
     border-left: 1px solid var(--lightgrey);
 }
+
+/* -------------------------------------------------- */
+/* Inventory Page */
+
+#inventoryTable
+{
+    border-collapse: collapse;
+    border: 1px solid var(--lightgrey);
+    padding: 30px 0px 0px 0px;/* top, right, bottom, left */
+}
+
+#inventoryTable th
+{
+    color: var(--lightblue);
+    font-size: 20px;
+    border: 3px solid var(--lightgrey);
+}
+
+#inventoryTable td 
+{
+    vertical-align: top;
+    text-align: center; 
+    border: 1px solid var(--lightgrey);
+}
+
+#inventoryTable th 
+{
+    padding: 30px 50px 30px 50px;/* top, right, bottom, left */
+    vertical-align: middle; 
+    text-align: center; 
+}
