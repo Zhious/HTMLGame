@@ -161,17 +161,174 @@
         <table id="inventoryTable">
             <thead>
                 <tr>
+                    <th rowspan="2" id="inventoryImageTableHead"></th>
                     <th rowspan="2">Item</th>
                     <th rowspan="2">Amount</th>
                     <th rowspan="2">Actions</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td class='sidenavTableRowImg'><img src="assets/inventorySprite.svg" width=32px height=32px></td>
-                    <td class='sidenavTableRowName'><p>Inventory</p></td>
-                    <td class='sidenavTableRowDescription'><p id="TEST3"></p></td>
+                <tr id="healthPotionItem">
+                    <td class='inventoryItemSprite'>
+                        <img src="assets/healthPotionSprite.svg" width=64px height=64px>
+                    </td>
+                    <td class='inventoryItemName'>
+                        <p>
+                            <div class="tooltip">
+                                Health Potion
+                                <span class="tooltipText">
+                                    On use, heals the user for 25% of their max hp.
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='inventoryItemAmount'>
+                        <p id="healthPotionAmount">
+                            0
+                        </p>
+                    </td>
+                    <td class='inventoryItemActions'>
+                        <p>
+                            <button onclick="useHealthPotion();" class="itemButton" type="button">Use</button>
+                            <button onclick="sellItem('healthPotion');" class="itemButton" type="button">Sell</button>
+                        </p>
+                    </td>
                 </tr>
+
+                <tr id="bombItem">
+                    <td class='inventoryItemSprite'>
+                        <img src="assets/bombSprite.svg" width=64px height=64px>
+                    </td>
+                    <td class='inventoryItemName'>
+                        <p>
+                            <div class="tooltip">
+                                Bomb
+                                <span class="tooltipText">
+                                    Could be used to open dungeons.
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='inventoryItemAmount'>
+                        <p id="bombAmount">
+                            0
+                        </p>
+                    </td>
+                    <td class='inventoryItemActions'>
+                        <p>
+                            <button onclick="sellItem('bomb');" class="itemButton" type="button">Sell</button>
+                        </p>
+                    </td>
+                </tr>
+
+                <tr id="kingsHiltItem">
+                    <td class='inventoryItemSprite'>
+                        <img src="assets/kingsHiltSprite.svg" width=64px height=64px>
+                    </td>
+                    <td class='inventoryItemName'>
+                        <p>
+                            <div class="tooltip">
+                                King's Hilt
+                                <span class="tooltipText">
+                                    Part of a great sword.
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='inventoryItemAmount'>
+                        <p id="kingsHiltAmount">
+                            0
+                        </p>
+                    </td>
+                    <td class='inventoryItemActions'>
+                        <p>
+                            <button onclick="useKingsHilt();" class="itemButton" type="button">Use</button>
+                            <button onclick="sellItem('kingsHilt');" class="itemButton" type="button">Sell</button>
+                        </p>
+                    </td>
+                </tr>
+
+                <tr id="kingsBladeItem">
+                    <td class='inventoryItemSprite'>
+                        <img src="assets/kingsBladeSprite.svg" width=64px height=64px>
+                    </td>
+                    <td class='inventoryItemName'>
+                        <p>
+                            <div class="tooltip">
+                                King's Blade
+                                <span class="tooltipText">
+                                    Part of a great sword.
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='inventoryItemAmount'>
+                        <p id="kingsBladeAmount">
+                            0
+                        </p>
+                    </td>
+                    <td class='inventoryItemActions'>
+                        <p>
+                            <button onclick="useKingsBlade();" class="itemButton" type="button">Use</button>
+                            <button onclick="sellItem('kingsBlade');" class="itemButton" type="button">Sell</button>
+                        </p>
+                    </td>
+                </tr>
+                
+                <tr id="kingsBardingItem">
+                    <td class='inventoryItemSprite'>
+                        <img src="assets/kingsBardingSprite.svg" width=64px height=64px>
+                    </td>
+                    <td class='inventoryItemName'>
+                        <p>
+                            <div class="tooltip">
+                                King's Barding
+                                <span class="tooltipText">
+                                    Part of an excellent armor.
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='inventoryItemAmount'>
+                        <p id="kingsBardingAmount">
+                            0
+                        </p>
+                    </td>
+                    <td class='inventoryItemActions'>
+                        <p>
+                            <button onclick="useKingsBarding();" class="itemButton" type="button">Use</button>
+                            <button onclick="sellItem('kingsBarding');" class="itemButton" type="button">Sell</button>
+                        </p>
+                    </td>
+                </tr>
+
+                <tr id="kingsPlateMetalItem">
+                    <td class='inventoryItemSprite'>
+                        <img src="assets/kingsPlateMetalSprite.svg" width=64px height=64px>
+                    </td>
+                    <td class='inventoryItemName'>
+                        <p>
+                            <div class="tooltip">
+                                King's Plate Metal
+                                <span class="tooltipText">
+                                    Part of an excellent armor.
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='inventoryItemAmount'>
+                        <p id="kingsPlateMetalAmount">
+                            0
+                        </p>
+                    </td>
+                    <td class='inventoryItemActions'>
+                        <p>
+                            <button onclick="useKingsPlateMetal();" class="itemButton" type="button">Use</button>
+                            <button onclick="sellItem('kingsPlateMetal');" class="itemButton" type="button">Sell</button>
+                        </p>
+                    </td>
+                </tr>
+
             </tbody>
         </table>
     </div>

@@ -492,3 +492,35 @@ li
     vertical-align: middle; 
     text-align: center; 
 }
+
+.inventoryItemName
+{
+    vertical-align: top;
+    text-align: center; 
+}
+
+.itemButton 
+{
+    padding: 8px 8px;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: var(--white);
+    background-color: var(--middlegreen);
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 4px #999;
+}
+  
+.itemButton:hover 
+{
+      background-color: var(--darkgreen)
+}
+  
+.itemButton:active 
+{
+    background-color: var(--lightgreen);
+    box-shadow: 0 1px var(--lightgrey);
+    transform: translateY(4px);
+}

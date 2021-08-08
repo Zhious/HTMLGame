@@ -1,6 +1,8 @@
 // made by Aaron Starr
 // Copyright, Aaron Starr. All rights reserved. Redistribution and use of this content including art, with or without modification, is prohibited. Except as represented in this agreement, all work product by Aaron Starr is provided "as-is". Other than as provided in this agreement, Aaron Starr makes no other warranties, express or implied, and hereby disclaims all implied warranties. Requests for; amendments, warranties, copyright information, questions, or permissions, please contact aaronstarrdev@gmail.com
 
+// i didnt know about json files and other ways to save and load data, so the inventory system is very limited. Guess something to think about if i make another html thing.
+
 'use strict';
 
 // global var for player data
@@ -62,6 +64,13 @@ function CenterPageObj(title="")
     obj.sidenavStoreName = 'sidenavStoreRow';
     obj.sidenavSaveName = 'sidenavSaveRow';
     obj.sidenavLoadName = 'sidenavLoadRow';
+
+    obj.inventoryPotionName = 'healthPotionItem';
+    obj.inventoryBombName = 'bombItem';
+    obj.inventoryKingsHiltName = 'kingsHiltItem';
+    obj.inventoryKingsBladeName = 'kingsBladeItem';
+    obj.inventoryKingsBardingName = 'kingsBardingItem';
+    obj.inventoryKingsPlateMetalName = 'kingsPlateMetalItem';
 
     return obj;
 }
@@ -440,6 +449,18 @@ function addToSkills(skill)
     }
 }
 
+// hide all center page setups
+function setAllCenterPagesToHidden()
+{
+    document.getElementById(centerPage.mainMenuName).hidden = true;
+    document.getElementById(centerPage.mapPageName).hidden = true;
+    document.getElementById(centerPage.characterPageName).hidden = true;
+    document.getElementById(centerPage.inventoryPageName).hidden = true;
+    document.getElementById(centerPage.skillPageName).hidden = true;
+    document.getElementById(centerPage.storePageName).hidden = true;
+    document.getElementById(centerPage.creditsPageName).hidden = true;
+}
+
 // increment kill counter. might be useful later
 function addToKills()
 {
@@ -523,7 +544,7 @@ function startButtonPressed()
 
     // INVENTORY
     addToInventory("Health Potion",2);
-    addToInventory("Inactive Bomb",1);
+    addToInventory("Bomb",1);
 
     // EXPERIENCE
     addExperience(305);
