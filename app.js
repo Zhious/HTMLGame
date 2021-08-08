@@ -353,7 +353,6 @@ function addExperience(number)
     var elements = document.getElementsByClassName("characterXP");
     for(var i = 0; i < elements.length; i++)
     {
-
         elements.item(i).innerHTML = playerData.xp + number;
     }
 
@@ -374,7 +373,6 @@ function addLevel()
     var elements = document.getElementsByClassName("characterLevel");
     for(var i = 0; i < elements.length; i++)
     {
-
         elements.item(i).innerHTML = (playerData.level + 1);
     }
 
@@ -396,7 +394,6 @@ function addLevel()
     var elements = document.getElementsByClassName("characterXPToNextLevel");
     for(var i = 0; i < elements.length; i++)
     {
-
         elements.item(i).innerHTML = (50 * Math.pow((playerData.level+1),2) - (50 * (playerData.level+1)));
     }
 }
