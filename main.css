@@ -222,6 +222,11 @@ span
     color: var(--brightred);
 }
 
+.characterMaxHealth
+{
+    color: var(--brightred);
+}
+
 .sidenavRows:hover
 {
     background-color:var(--middlegrey);

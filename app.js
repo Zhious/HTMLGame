@@ -15,7 +15,14 @@ const playerData = {
     xp:0,
     weapon:"",
     armor:"",
-    inventory:{},
+    inventory:{
+        healthPotion: 0,
+        bomb: 0,
+        kingsBlade: 0,
+        kingsHilt: 0,
+        kingsBarding: 0,
+        kingsPlateMetal: 0
+    },
     skills:{
         rend: 0,
         block: 0,
@@ -64,13 +71,6 @@ function CenterPageObj(title="")
     obj.sidenavStoreName = 'sidenavStoreRow';
     obj.sidenavSaveName = 'sidenavSaveRow';
     obj.sidenavLoadName = 'sidenavLoadRow';
-
-    obj.inventoryPotionName = 'healthPotionItem';
-    obj.inventoryBombName = 'bombItem';
-    obj.inventoryKingsHiltName = 'kingsHiltItem';
-    obj.inventoryKingsBladeName = 'kingsBladeItem';
-    obj.inventoryKingsBardingName = 'kingsBardingItem';
-    obj.inventoryKingsPlateMetalName = 'kingsPlateMetalItem';
 
     return obj;
 }
@@ -178,6 +178,8 @@ function loadCharacterSheet()
 // load the center page with the inventory html
 function loadInventorySheet()
 {
+    updateInventoryView();
+
     document.getElementById(centerPage.titleName).innerHTML = "Inventory";
 
     setAllCenterPagesToHidden(centerPage);
@@ -244,7 +246,6 @@ function setName(name)
 function setHealth(newHealth)
 {
     var elements = document.getElementsByClassName("characterHealth");
-    console.log(elements);
     // player death
     if(newHealth <= 0)
     {
@@ -334,22 +335,6 @@ function setArmor(armor)
     playerData.armor = armor;
 }
 
-// add item to inventory. If it already exists, increment value by amount
-function addToInventory(item,amount)
-{
-    // update view
-
-    // update data
-    if(playerData.inventory[item])
-    {
-        playerData.inventory[item] = playerData.inventory[item] + amount;
-    }
-    else
-    {
-        playerData.inventory[item] = amount;
-    }
-}
-
 // Experience Levels as follows
 // 50 * (level^2) - (50 * level)
 // 1: start of game
@@ -392,11 +377,17 @@ function addLevel()
         setSkillPoints(playerData.skillPoints + 1);
         playerData.maxhealth += 10;
         setHealth(playerData.maxhealth);
+        
     }
     else
     {
         playerData.maxhealth = 100;
         setHealth(playerData.maxhealth)
+    }
+    var maxHealthElements = document.getElementsByClassName("characterMaxHealth");
+    for(var i = 0; i < maxHealthElements.length; i++)
+    {
+        maxHealthElements.item(i).innerHTML = playerData.maxhealth;
     }
 
     // update view for xp to next level
@@ -449,16 +440,119 @@ function addToSkills(skill)
     }
 }
 
-// hide all center page setups
-function setAllCenterPagesToHidden()
+// show/hide inventory items based on amount
+function updateInventoryView()
 {
-    document.getElementById(centerPage.mainMenuName).hidden = true;
-    document.getElementById(centerPage.mapPageName).hidden = true;
-    document.getElementById(centerPage.characterPageName).hidden = true;
-    document.getElementById(centerPage.inventoryPageName).hidden = true;
-    document.getElementById(centerPage.skillPageName).hidden = true;
-    document.getElementById(centerPage.storePageName).hidden = true;
-    document.getElementById(centerPage.creditsPageName).hidden = true;
+    // update data and view
+    for(let inventoryItem in playerData.inventory)
+    {        
+        if(playerData.inventory[inventoryItem] >= 1)
+        {
+            document.getElementById(inventoryItem + "Amount").innerHTML = playerData.inventory[inventoryItem];
+            document.getElementById(inventoryItem + "Item").hidden = false;
+        }
+        else
+        {
+            document.getElementById(inventoryItem + "Amount").innerHTML = 0;
+            document.getElementById(inventoryItem + "Item").hidden = true;
+        }
+    }
+}
+
+// add item to inventory. If it already exists, increment value by amount
+function addToInventory(item,amount)
+{
+    // update view
+
+    // update data
+    if(playerData.inventory[item])
+    {
+        playerData.inventory[item] += amount;
+    }
+    else
+    {
+        playerData.inventory[item] = amount;
+    }
+}
+
+function removeFromInventory(name,action)
+{
+    if(action == 'use')
+    {
+        switch(name)
+        {
+            case 'healthPotion':
+                var healPercent = .25;
+                if(playerData.skills['refinedTaste'] == 1)
+                {
+                    healPercent = .35;
+                }
+                var newHP = playerData.health + Math.ceil(playerData.maxhealth * healPercent);
+                setHealth(newHP); // setHealth checks for overheal already
+                playerData.inventory[name] -= 1;
+                break;
+
+            case 'bomb':
+                playerData.inventory[name] -= 1;
+                break;
+
+            case 'kingsBlade':
+            case 'kingsHilt':
+                if( (playerData.inventory['kingsBlade'] >= 1) && (playerData.inventory['kingsHilt'] >= 1) )
+                {
+                    setWeapon("King's Sword");
+                    document.getElementById('kingsHilt' + "UseButton").hidden = true;
+                    document.getElementById('kingsBlade' + "UseButton").hidden = true;
+                    playerData.inventory['kingsHilt'] -= 1;
+                    playerData.inventory['kingsBlade'] -= 1;
+                }
+                break;
+
+            case 'kingsBarding':
+            case 'kingsPlateMetal':
+                if( (playerData.inventory['kingsBarding'] >= 1) && (playerData.inventory['kingsPlateMetal'] >= 1) )
+                {
+                    setArmor("King's Plate");
+                    document.getElementById('kingsBarding' + "UseButton").hidden = true;
+                    document.getElementById('kingsPlateMetal' + "UseButton").hidden = true;
+                    playerData.inventory['kingsBarding'] -= 1;
+                    playerData.inventory['kingsPlateMetal'] -= 1;
+                }
+                break;
+        }
+        updateInventoryView()
+    }
+    else if(action == 'sell')
+    {
+        switch(name)
+        {
+            case 'healthPotion':
+                setGold(playerData.gold += 25);
+                break;
+
+            case 'bomb':
+                setGold(playerData.gold += 50);
+                break;
+
+            case 'kingsBlade':
+                setGold(playerData.gold += 250);
+                break;
+
+            case 'kingsHilt':
+                setGold(playerData.gold += 250);
+                break;
+
+            case 'kingsBarding':
+                setGold(playerData.gold += 250);
+                break;
+
+            case 'kingsPlateMetal':
+                setGold(playerData.gold += 250);
+                break;
+        }
+        playerData.inventory[name] -= 1;
+        updateInventoryView()
+    }
 }
 
 // increment kill counter. might be useful later
@@ -543,8 +637,12 @@ function startButtonPressed()
     setArmor("Tattered Cloth");
 
     // INVENTORY
-    addToInventory("Health Potion",2);
-    addToInventory("Bomb",1);
+    addToInventory("healthPotion",2);
+    addToInventory("bomb",1);
+    addToInventory("kingsBarding",3);
+    addToInventory("kingsPlateMetal",3);
+    addToInventory("kingsHilt",1);
+    addToInventory("kingsBlade",2);
 
     // EXPERIENCE
     addExperience(305);
@@ -570,4 +668,8 @@ function startButtonPressed()
 
     // landing page after start
     loadMapSheet();
+
+    setHealth(40);
+
+    updateInventoryView();
 }
