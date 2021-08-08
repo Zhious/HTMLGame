@@ -212,12 +212,12 @@ span
     width: 100%;
 }
 
-#sidenavGold
+.characterGold
 {
     color: var(--gold);
 }
 
-#sidenavHealth
+.characterHealth
 {
     color: var(--brightred);
 }
@@ -298,6 +298,41 @@ li
     visibility: visible;
 }
 
+.tooltip 
+{
+    position: relative;
+    display: inline-block;
+    padding-top: 2px;
+    border-bottom: 1px dotted var(--lightgrey); /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltipText
+{
+    visibility: hidden;
+    width: 300px;
+    background-color: var(--black);
+    color: var(--white);
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -60px;
+}
+
+.tooltip:hover .tooltipText 
+{
+    visibility: visible;
+}
+
+.tooltipTitle
+{
+    color: var(--middleorange);
+}
+
 /* ------------------------------------------------------------------ */
 /* Credits Page */
 
@@ -365,40 +400,6 @@ li
     display: inline
 }
 
-.tooltip 
-{
-    position: relative;
-    display: inline-block;
-    border-bottom: 1px dotted var(--lightgrey); /* If you want dots under the hoverable text */
-}
-
-/* Tooltip text */
-.tooltip .tooltipText
-{
-    visibility: hidden;
-    width: 300px;
-    background-color: var(--black);
-    color: var(--white);
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 150%;
-    left: 50%;
-    margin-left: -60px;
-}
-
-.tooltip:hover .tooltipText 
-{
-    visibility: visible;
-}
-
-.tooltipTitle
-{
-    color: var(--middleorange);
-}
-
 .skillchangeText
 {
     color: var(--middlegreen);
@@ -412,4 +413,51 @@ li
 .skillsPageRowInfo:hover
 {
     background-color:var(--middlegrey);
+}
+
+/* -------------------------------------------------- */
+/* Character Page */
+
+.characterPageRowInfoName
+{
+    width: 100px;
+    text-align: right;
+    padding: 0px 10px 0px 0px;/* top, right, bottom, left */
+}
+
+.characterPageRowInfoValue
+{
+    width: 250px;
+    text-align: left;
+    padding: 0px 10px 0px 10px;/* top, right, bottom, left */
+}
+
+#characterPageImg
+{
+    padding: 20px 20px 0px 20px;/* top, right, bottom, left */
+}
+
+#characterSecondaryAttributeBox
+{
+    border-top: 1px solid var(--lightgrey);
+}
+
+#characterPageTable
+{
+    padding: 30px 0px 0px 0px; /* top, right, bottom, left */
+}
+
+#characterPageTable td 
+{
+    vertical-align: top;
+}
+
+.characterPageRowInfoValuePadding
+{
+    padding: 2px; /* top */
+}
+
+#characterPageRow1
+{
+    border-left: 1px solid var(--lightgrey);
 }

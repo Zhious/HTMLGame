@@ -54,7 +54,6 @@
             <li>Pages for Sidebar stuff (skills, store, etc)</li>
             <li>clean up UI</li>
             <li>content that allows the game to be "played"</li>
-            <li>Difficulty settings</li>
             <li>release Alpha version</li>
         </ul>
     </div>
@@ -72,20 +71,78 @@
             </table>
         </ul>
     </div>
+
+
     <div id="characterPage" hidden>
-        <p id="msg">Character:</p>
-        <ul>
-            <table id="centerTable">
-                <tbody>
-                    <tr>
-                        <td class='sidenavTableRowImg'><img src="assets/characterSprite.svg" width="32" height="32"></td>
-                        <td class='sidenavTableRowName'><p>Character</p></td>
-                        <td class='sidenavTableRowDescription'><p id="TEST2"></p></td>
-                    </tr>
-                </tbody>
-            </table>
-        </ul>
+        <table id="characterPageTable">
+            <tbody>
+                <tr id="characterPageRow1">
+                    <td rowspan="2" id="characterPageImg">
+                        <img src="assets/characterPageSpriteNaked.svg" width=128px height=256px>
+                        <p class='characterName'>IdiotWithNoName</p>
+                    </td>
+                    <td class='characterPageRowInfoName' id="characterPrimaryAttributeBox">
+                        <p>
+                            <div class="tooltip">
+                                Max HP
+                                <span class="tooltipText">
+                                    Taking damage reduces hp. When at, or below, 0. You die.
+                                </span>
+                            </div>
+                            <br>
+                            <div class="tooltip">
+                                Armor
+                                <span class="tooltipText">
+                                    Each tier, above 0, reduces damage taken by 1.
+                                </span>
+                            </div>
+                            <br>
+                            <div class="tooltip">
+                                Weapon
+                                <span class="tooltipText">
+                                    Each tier, above 0, increases damage done by 3.
+                                </span>
+                            </div>
+                            <br>
+                            <div class="tooltip">
+                                Level
+                                <span class="tooltipText">
+                                    Gain a level, and a skillpoint, when experience reaches appropriate thresholds.
+                                </span>
+                            </div>
+                            <br>
+                            <div class="tooltip">
+                                Current XP
+                                <span class="tooltipText">
+                                    Gained by killing monsters or completing quests.
+                                </span>
+                            </div>
+                            <br>
+                            <div class="tooltip">
+                                XP To Level
+                                <span class="tooltipText">
+                                    Gained by killing monsters or completing quests.
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='characterPageRowInfoValue' id="characterPrimaryAttributeBox">
+                        <p>
+                            <div class="characterHealth"></div><div class="characterPageRowInfoValuePadding"></div>
+                            <div class="characterArmor"></div><div class="characterPageRowInfoValuePadding"></div>
+                            <div class="characterWeapon"></div><div class="characterPageRowInfoValuePadding"></div>
+                            <div class="characterLevel"></div><div class="characterPageRowInfoValuePadding"></div>
+                            <div class="characterXP"></div><div class="characterPageRowInfoValuePadding"></div>
+                            <div class="characterXPToNextLevel"></div>
+                        </p>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
     </div>
+
+
     <div id="inventoryPage" hidden>
         <p id="msg">Inventory:</p>
         <ul>
@@ -100,6 +157,8 @@
             </table>
         </ul>
     </div>
+
+
     <div id="skillPage" hidden>
         <br>
         <span><b>Available Skill Points:</b></span><span id="skillPageSkillPoints">0</span>
@@ -232,6 +291,8 @@
             </tbody>
         </table>
     </div>
+
+
     <div id="storePage" hidden>
         <p id="msg">Store:</p>
         <ul>
@@ -246,6 +307,8 @@
             </table>
         </ul>
     </div>
+
+
     <div id="creditsPage" hidden>
         <table id="creditsTable">
             <thead>
@@ -289,7 +352,7 @@
             <tr onclick="sidenavRowClick(1)" id="sidenavCharacterRow" class="sidenavRows" hidden>
                 <td class='sidenavTableRowImg'><img src="assets/characterSprite.svg" alt="characterSprite" width="32" height="32"></td>
                 <td class='sidenavTableRowName'><p>Character</p></td>
-                <td class='sidenavTableRowDescription'><p id="sidenavCharacterName">IdiotWithNoName</p><p id="sidenavHealth">0 HP</p></td>
+                <td class='sidenavTableRowDescription'><p class="characterName"></p><p class="characterHealth"></p></td>
             </tr>
             <tr onclick="sidenavRowClick(2)" id="sidenavInventoryRow" class="sidenavRows" hidden>
                 <td class='sidenavTableRowImg'><img src="assets/inventorySprite.svg" alt="inventorySprite" width=32px height=32px></td>
@@ -304,7 +367,7 @@
             <tr onclick="sidenavRowClick(4)" id="sidenavStoreRow" class="sidenavRows" hidden>
                 <td class='sidenavTableRowImg'><img src="assets/Small_Brown_Bag.png" alt="storeSprite" width=32px height=32px></td>
                 <td class='sidenavTableRowName'><p>Store</p></td>
-                <td class='sidenavTableRowDescription'><p id="sidenavGold">0 GP</p></td>
+                <td class='sidenavTableRowDescription'><p class="characterGold"></p></td>
             </tr>
             <tr onclick="sidenavRowClick(5)" id="sidenavSaveRow" class="sidenavRows" hidden>
                 <td class='sidenavTableRowImg'><img src="assets/saveFileSprite.svg" alt="saveSprite" width=32px height=32px></td>

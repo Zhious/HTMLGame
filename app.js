@@ -6,6 +6,7 @@
 // global var for player data
 const playerData = {
     name:"",
+    maxhealth:100, // increased through function addLevel()
     health:0,
     gold:0,
     level:0,
@@ -43,7 +44,7 @@ function CenterPageObj(title="")
     obj.titleName = 'centerPageTitle';
     obj.title = title;
     //obj.titleBar = 'centerPageBar'
-    obj.playerNameId = 'sidenavCharacterName'
+    obj.playerNameClass = 'characterName'
 
     obj.mainMenuName = 'mainMenu';
     obj.mapPageName = 'mapPage';
@@ -220,7 +221,11 @@ function loadCreditsSheet()
 function setName(name)
 {
     // update view
-    document.getElementById(centerPage.playerNameId).innerHTML = name;
+    var elements = document.getElementsByClassName(centerPage.playerNameClass);
+    for(var i = 0; i < elements.length; i++)
+    {
+        elements.item(i).innerHTML = name;
+    }
 
     // update data
     playerData.name = name;
@@ -229,19 +234,38 @@ function setName(name)
 
 function setHealth(newHealth)
 {
+    var elements = document.getElementsByClassName("characterHealth");
+    console.log(elements);
     // player death
     if(newHealth <= 0)
     {
         // update view
-        document.getElementById("sidenavHealth").innerHTML = "0 HP";
+        for(var i = 0; i < elements.length; i++)
+        {
+            elements.item(i).innerHTML = "0 HP";
+        }
 
         // update data
         playerData.health = 0;
     }
+    else if(newHealth > playerData.maxhealth)
+    {
+        // update view
+        for(var i = 0; i < elements.length; i++)
+        {
+            elements.item(i).innerHTML = playerData.maxhealth + " HP";
+        }
+
+        // update data
+        playerData.health = playerData.maxhealth;
+    }
     else
     {
         // update view
-        document.getElementById("sidenavHealth").innerHTML = newHealth + " HP";
+        for(var i = 0; i < elements.length; i++)
+        {
+            elements.item(i).innerHTML = newHealth + " HP";
+        }
 
         // update data
         playerData.health = newHealth;
@@ -251,7 +275,11 @@ function setHealth(newHealth)
 function setGold(newGold)
 {
     // update view
-    document.getElementById("sidenavGold").innerHTML = newGold + " GP";
+    var elements = document.getElementsByClassName("characterGold");
+    for(var i = 0; i < elements.length; i++)
+    {
+        elements.item(i).innerHTML = newGold + " GP";
+    }
 
     // update data
     playerData.gold = newGold;
@@ -267,6 +295,11 @@ function setGold(newGold)
 function setWeapon(weapon)
 {
     // update view
+    var elements = document.getElementsByClassName("characterWeapon");
+    for(var i = 0; i < elements.length; i++)
+    {
+        elements.item(i).innerHTML = weapon;
+    }
 
     // update data
     playerData.weapon = weapon;
@@ -282,6 +315,11 @@ function setWeapon(weapon)
 function setArmor(armor)
 {
     // update view
+    var elements = document.getElementsByClassName("characterArmor");
+    for(var i = 0; i < elements.length; i++)
+    {
+        elements.item(i).innerHTML = armor;
+    }
 
     // update data
     playerData.armor = armor;
@@ -300,6 +338,66 @@ function addToInventory(item,amount)
     else
     {
         playerData.inventory[item] = amount;
+    }
+}
+
+// Experience Levels as follows
+// 50 * (level^2) - (50 * level)
+// 1: start of game
+// 2: 100
+// 3: 300
+// 4: 600...
+function addExperience(number)
+{
+    // update view
+    var elements = document.getElementsByClassName("characterXP");
+    for(var i = 0; i < elements.length; i++)
+    {
+
+        elements.item(i).innerHTML = playerData.xp + number;
+    }
+
+    // update data
+    playerData.xp += number;
+
+    var xpForNextLevel = (50 * Math.pow((playerData.level+1),2) - (50 * (playerData.level+1)));
+    while(playerData.xp >= xpForNextLevel)
+    {
+        addLevel();
+        xpForNextLevel = (50 * Math.pow((playerData.level+1),2) - (50 * (playerData.level+1)))
+    }
+}
+
+function addLevel()
+{
+    // update view
+    var elements = document.getElementsByClassName("characterLevel");
+    for(var i = 0; i < elements.length; i++)
+    {
+
+        elements.item(i).innerHTML = (playerData.level + 1);
+    }
+
+    // update data
+    playerData.level += 1;
+    if(playerData.level > 1)
+    {
+        setSkillPoints(playerData.skillPoints + 1);
+        playerData.maxhealth += 10;
+        setHealth(playerData.maxhealth);
+    }
+    else
+    {
+        playerData.maxhealth = 100;
+        setHealth(playerData.maxhealth)
+    }
+
+    // update view for xp to next level
+    var elements = document.getElementsByClassName("characterXPToNextLevel");
+    for(var i = 0; i < elements.length; i++)
+    {
+
+        elements.item(i).innerHTML = (50 * Math.pow((playerData.level+1),2) - (50 * (playerData.level+1)));
     }
 }
 
@@ -415,7 +513,7 @@ function startButtonPressed()
     }
 
     // HEALTH
-    setHealth(100);
+    //setHealth(90);
 
     // GOLD
     setGold(50);
@@ -430,8 +528,11 @@ function startButtonPressed()
     addToInventory("Health Potion",2);
     addToInventory("Inactive Bomb",1);
 
-    // SKILL POINTS
-    setSkillPoints(3);
+    // EXPERIENCE
+    addExperience(305);
+
+    // LEVEL
+    //addLevel();
 
     // KILLS
     playerData.totalKills = 0;
