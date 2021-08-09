@@ -156,7 +156,7 @@ function setMostSideNavToHidden()
     document.getElementById(centerPage.sidenavCreditsName).hidden = true;
 }
 
-// Show most sidenav buttons (exclusions apply; such as Save, Load and Credits which are always visible)
+// Show most sidenav buttons
 function setMostSideNavToVisible()
 {
     document.getElementById(centerPage.sidenavMapName).hidden = false;
@@ -164,7 +164,7 @@ function setMostSideNavToVisible()
     document.getElementById(centerPage.sidenavInventoryName).hidden = false;
     document.getElementById(centerPage.sidenavSkillName).hidden = false;
     document.getElementById(centerPage.sidenavStoreName).hidden = false;
-    document.getElementById(centerPage.sidenavSaveName).hidden = false;
+    document.getElementById(centerPage.sidenavSaveName).hidden = true;
     document.getElementById(centerPage.sidenavCreditsName).hidden = false;
 }
 

@@ -6,12 +6,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zhio Game ALPHA</title>
+    <title>Zhio Game</title>
+    <link rel="icon" type="image/png" href="assets/favicon.png"/>
     <link rel="stylesheet" href="main.css">
 </head>
 
 <div id="centerPageBar">
-    <h1 id="centerPageTitle">Zhio's Game ALPHA</h1>
+    <h1 id="centerPageTitle">Zhio's Game</h1>
 </div>
 
 
@@ -22,15 +23,10 @@
         <p>This is a game, here are some things to look forward to in the game:</p>
         <ul>
             <li class="list">Terrible Balance</li>
-            <li class="list">Terrible Writing (not implemented)</li>
             <li class="list">Terrible Game Design</li>
             <li class="list">Terrible Art</li>
             <li class="list">Terrible UI</li>
-            <li>A memorable experience</li>
         </ul>
-        <p>
-            <b>If you care; remember to save often</b>, this is my first html/css/js game ever, so you've been warned.
-        </p><br>
         <p>
             Now that we have all the great things out of the way, we can get started.
         </p>
@@ -38,35 +34,13 @@
         <!–– could of done this with forms probably but it was not cooperating, so I did it the jank way -->
         <input type="text" id="startMainMenuName" maxlength="16" placeholder="Max 16, no commas" pattern='^[^,]{1,16}$' required>
         <button onclick="startButtonPressed();this.disabled=true;" class="button" id='startMainMenuButton' type="button">Start</button>
+        <br>
         <p>
-            You can find the wiki here: <a class="hyperlink" href="https://www.google.com/" target="_blank">Zhio's HTML Game Wiki</a>
-        </p>
-        <p>
-            You can also click the game logo in the top left to go to the wiki.
-        </p><br>
-        <p>
-            ALPHA TODO (Feature-complete):
+            TODO:
         </p>
         <ul>
-            <li>Save/Load system</li>
             <li>Map functionality</li>
-            <li>Wiki</li>
-            <li>Pages for Sidebar stuff (skills, store, etc)</li>
-            <li>content that allows the game to be "played"</li>
-        </ul>
-        <p>
-            BETA TODO (Content-complete):
-        </p>
-        <ul>
-            <li>Quests/Bounties</li>
-            <li>Story/NPC interaction</li>
-            <li>real art (more time taken on each piece and character model updates for armor/weapon)</li>
-            <li>Tutorial/Popups when needed</li>
-            <li>Settings page</li>
-            <li>difficulty</li>
-            <li>Player classes</li>
-            <li>More enemies</li>
-            <li>More towns</li>
+            <li>combat</li>
         </ul>
     </div>
     <div id="mapPage" hidden>
@@ -743,12 +717,10 @@
                     <th rowspan="2">Programming</th>
                     <th rowspan="2">Game Design</th>
                     <th rowspan="2">Art</th>
-                    <th rowspan="2">Writing</th>
                 </tr>
             </thead>
             <tbody>
                 <tr id="creditsPageRow1">
-                    <td class='creditsPageRowInfo'><p>Aaron Starr</p></td>
                     <td class='creditsPageRowInfo'><p>Aaron Starr</p></td>
                     <td class='creditsPageRowInfo'><p>Aaron Starr</p></td>
                     <td class='creditsPageRowInfo'><p>Aaron Starr</p></td>
@@ -764,7 +736,7 @@
 
 
 <div id="gameNameBar">
-    <a class="hyperlink" href="https://www.google.com/" target="_blank"><img id="gameLogo" src="assets/gameLogo.svg"></a>
+    <img id="gameLogo" src="assets/gameLogo.svg">
 </div>
 
 <div class="sidenav">
@@ -801,7 +773,7 @@
                 <td class='sidenavTableRowName'><p>TODO</p></td>
                 <td class='sidenavTableRowDescription'><p id="sidenavSave"></p></td>
             </tr>
-            <tr onclick="sidenavRowClick(6)" id="sidenavLoadRow" class="sidenavRows">
+            <tr onclick="sidenavRowClick(6)" id="sidenavLoadRow" class="sidenavRows" hidden>
                 <td class='sidenavTableRowImg'><img src="assets/loadFileSprite.svg" alt="loadSprite" width=32px height=32px></td>
                 <td class='sidenavTableRowName'><p>TODO</p></td>
                 <td class='sidenavTableRowDescription'><p id="sidenavLoad"></p></td>
