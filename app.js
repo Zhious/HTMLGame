@@ -314,6 +314,8 @@ function setGold(newGold)
 function updateStorePage()
 {
     healthPotionItemCost
+
+    // set a 25% reduction in prices if haggle
     if(playerData.skills["haggle"] == 1 && !gameData.haggleApplied)
     {
         gameData.healthPotionCost = Math.floor(gameData.healthPotionCost * .75);
@@ -340,6 +342,7 @@ function updateStorePage()
 
         gameData.haggleApplied = true;
     }
+    // hide old gear and upgrades beyond 1 depth
     switch(playerData.weapon)
     {
         case 'Rusty Sword':
@@ -372,6 +375,7 @@ function updateStorePage()
             document.getElementById('imbuedSwordItem').hidden = true;
             break;
     }
+    // hide old gear and upgrades beyond 1 depth
     switch(playerData.armor)
     {
         case 'Tattered Cloth':
@@ -958,7 +962,7 @@ function startButtonPressed()
     addToInventory("kingsBlade",2,0);
 
     // EXPERIENCE
-    addExperience(305);
+    addExperience(0);
 
     // LEVEL
     //addLevel();
