@@ -44,7 +44,18 @@ const playerData = {
 const gameData = {
     currentLocation:"",
     townStage:0,
-    dungeonStage:0
+    dungeonStage:0,
+    healthPotionCost:50,
+    bombCost:100,
+    ironSwordCost:100,
+    steelSwordCost:200,
+    sharpSteelSwordCost:300,
+    imbuedSwordCost:400,
+    clothArmorCost:100,
+    leatherArmorCost:200,
+    breastPlateCost:300,
+    fullPlateCost:400,
+    haggleApplied:false
 };
 
 /* center page obj constuctor */
@@ -300,6 +311,33 @@ function setGold(newGold)
 // hide lower and higher tier items that arent for purchase
 function updateStorePage()
 {
+    healthPotionItemCost
+    if(playerData.skills["haggle"] == 1 && !gameData.haggleApplied)
+    {
+        gameData.healthPotionCost = Math.floor(gameData.healthPotionCost * .75);
+        gameData.bombCost = Math.floor(gameData.bombCost * .75);
+        gameData.ironSwordCost = Math.floor(gameData.ironSwordCost * .75);
+        gameData.steelSwordCost = Math.floor(gameData.steelSwordCost * .75);
+        gameData.sharpSteelSwordCost = Math.floor(gameData.sharpSteelSwordCost * .75);
+        gameData.imbuedSwordCost = Math.floor(gameData.imbuedSwordCost * .75);
+        gameData.clothArmorCost = Math.floor(gameData.clothArmorCost * .75);
+        gameData.leatherArmorCost = Math.floor(gameData.leatherArmorCost * .75);
+        gameData.breastPlateCost = Math.floor(gameData.breastPlateCost * .75);
+        gameData.fullPlateCost = Math.floor(gameData.fullPlateCost * .75);
+
+        document.getElementById('healthPotionItemCost').innerHTML = gameData.healthPotionCost;
+        document.getElementById('bombItemCost').innerHTML = gameData.bombCost;
+        document.getElementById('ironSwordItemCost').innerHTML = gameData.ironSwordCost;
+        document.getElementById('steelSwordItemCost').innerHTML = gameData.steelSwordCost;
+        document.getElementById('sharpSteelSwordItemCost').innerHTML = gameData.sharpSteelSwordCost;
+        document.getElementById('imbuedSwordItemCost').innerHTML = gameData.imbuedSwordCost;
+        document.getElementById('clothArmorItemCost').innerHTML = gameData.clothArmorCost;
+        document.getElementById('leatherArmorItemCost').innerHTML = gameData.leatherArmorCost;
+        document.getElementById('breastPlateItemCost').innerHTML = gameData.breastPlateCost;
+        document.getElementById('fullPlateItemCost').innerHTML = gameData.fullPlateCost;
+
+        gameData.haggleApplied = true;
+    }
     switch(playerData.weapon)
     {
         case 'Rusty Sword':
@@ -569,6 +607,7 @@ function addToSkills(skill)
         // update view
         document.getElementById(skill.toLowerCase() + "SkillBox").style.backgroundColor = "#232A35";
     }
+    updateStorePage();
 }
 
 // show/hide inventory items based on amount
@@ -611,9 +650,9 @@ function addToInventory(item,amount,aquisition)
         switch(item)
         {
             case 'healthPotion':
-                if(playerData.gold >= 50)
+                if(playerData.gold >= gameData.healthPotionCost)
                 {
-                    setGold(playerData.gold -= 50);
+                    setGold(playerData.gold -= gameData.healthPotionCost);
                     if(playerData.inventory[item])
                     {
                         playerData.inventory[item] += amount;
@@ -626,9 +665,9 @@ function addToInventory(item,amount,aquisition)
                 break;
 
             case 'bomb':
-                if(playerData.gold >= 100)
+                if(playerData.gold >= gameData.bombCost)
                 {
-                    setGold(playerData.gold -= 100);
+                    setGold(playerData.gold -= gameData.bombCost);
                     if(playerData.inventory[item])
                     {
                         playerData.inventory[item] += amount;
@@ -642,65 +681,65 @@ function addToInventory(item,amount,aquisition)
 
             // item checks should help rpevent element editting in a webpage
             case 'ironSword':
-                if(playerData.gold >= 100 && (playerData.weapon == "Rusty Sword") )
+                if(playerData.gold >= gameData.ironSwordCost && (playerData.weapon == "Rusty Sword") )
                 {
-                    setGold(playerData.gold -= 100);
+                    setGold(playerData.gold -= gameData.ironSwordCost);
                     setWeapon("Iron Sword");
                 }
                 break;
 
             case 'steelSword':
-                if(playerData.gold >= 200 && (playerData.weapon == "Iron Sword"))
+                if(playerData.gold >= gameData.steelSwordCost && (playerData.weapon == "Iron Sword"))
                 {
-                    setGold(playerData.gold -= 200);
+                    setGold(playerData.gold -= gameData.steelSwordCost);
                     setWeapon("Steel Sword");
                 }
                 break;
 
             case 'sharpSteelSword':
-                if(playerData.gold >= 300 && (playerData.weapon == "Steel Sword"))
+                if(playerData.gold >= gameData.sharpSteelSwordCost && (playerData.weapon == "Steel Sword"))
                 {
-                    setGold(playerData.gold -= 300);
+                    setGold(playerData.gold -= gameData.sharpSteelSwordCost);
                     setWeapon("Sharp Steel Sword");
                 }
                 break;
 
             case 'imbuedSword':
-                if(playerData.gold >= 400 && (playerData.weapon == "Sharp Steel Sword"))
+                if(playerData.gold >= gameData.imbuedSwordCost && (playerData.weapon == "Sharp Steel Sword"))
                 {
-                    setGold(playerData.gold -= 400);
+                    setGold(playerData.gold -= gameData.imbuedSwordCost);
                     setWeapon("Imbued Sword");
                 }
                 break;
 
             case 'clothArmor':
-                if(playerData.gold >= 100 && (playerData.armor == "Tattered Cloth"))
+                if(playerData.gold >= gameData.clothArmorCost && (playerData.armor == "Tattered Cloth"))
                 {
-                    setGold(playerData.gold -= 100);
+                    setGold(playerData.gold -= gameData.clothArmorCost);
                     setArmor("Cloth Armor");
                 }
                 break;
 
             case 'leatherArmor':
-                if(playerData.gold >= 200 && (playerData.armor == "Cloth Armor"))
+                if(playerData.gold >= gameData.leatherArmorCost && (playerData.armor == "Cloth Armor"))
                 {
-                    setGold(playerData.gold -= 200);
+                    setGold(playerData.gold -= gameData.leatherArmorCost);
                     setArmor("Leather Armor");
                 }
                 break;
 
             case 'breastPlate':
-                if(playerData.gold >= 300 && (playerData.armor == "Leather Armor"))
+                if(playerData.gold >= gameData.breastPlateCost && (playerData.armor == "Leather Armor"))
                 {
-                    setGold(playerData.gold -= 300);
+                    setGold(playerData.gold -= gameData.breastPlateCost);
                     setArmor("Breast Plate");
                 }
                 break;
 
             case 'fullPlate':
-                if(playerData.gold >= 400 && (playerData.armor == "Breast Plate"))
+                if(playerData.gold >= gameData.fullPlateCost && (playerData.armor == "Breast Plate"))
                 {
-                    setGold(playerData.gold -= 400);
+                    setGold(playerData.gold -= gameData.fullPlateCost);
                     setArmor("Full Plate");
                 }
                 break;
