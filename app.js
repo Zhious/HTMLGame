@@ -77,6 +77,7 @@ function CenterPageObj(title="")
     obj.skillPageName = 'skillPage';
     obj.storePageName = 'storePage';
     obj.creditsPageName = 'creditsPage';
+    obj.combatPageName = 'combatPage';
 
     obj.sidenavMapName = 'sidenavMapRow';
     obj.sidenavCreditsName = 'sidenavCreditsRow';
@@ -86,6 +87,7 @@ function CenterPageObj(title="")
     obj.sidenavStoreName = 'sidenavStoreRow';
     obj.sidenavSaveName = 'sidenavSaveRow';
     obj.sidenavLoadName = 'sidenavLoadRow';
+    obj.sidenavCombatName = 'sidenavCombatRow';
 
     return obj;
 }
@@ -130,6 +132,10 @@ function sidenavRowClick(rowNum)
         case 7: // Credits
             loadCreditsSheet();
             break;
+
+        case -1: // Credits
+            goToLocation(gameData.currentLocation,1);
+            break;
     }
 }
 
@@ -143,6 +149,7 @@ function setAllCenterPagesToHidden()
     document.getElementById(centerPage.skillPageName).hidden = true;
     document.getElementById(centerPage.storePageName).hidden = true;
     document.getElementById(centerPage.creditsPageName).hidden = true;
+    document.getElementById(centerPage.combatPageName).hidden = true;
 }
 
 // Hide most sidenav buttons (exclusions apply; such as Save, Load, Credits)
@@ -164,8 +171,16 @@ function setMostSideNavToVisible()
     document.getElementById(centerPage.sidenavInventoryName).hidden = false;
     document.getElementById(centerPage.sidenavSkillName).hidden = false;
     document.getElementById(centerPage.sidenavStoreName).hidden = false;
-    document.getElementById(centerPage.sidenavSaveName).hidden = true;
     document.getElementById(centerPage.sidenavCreditsName).hidden = false;
+}
+
+function setCombatSideNavToVisible()
+{
+    document.getElementById(centerPage.sidenavCombatName).hidden = false;
+}
+function setCombatSideNavToHidden()
+{
+    document.getElementById(centerPage.sidenavCombatName).hidden = true;
 }
 
 
@@ -240,8 +255,92 @@ function loadCreditsSheet()
     document.getElementById(centerPage.creditsPageName).hidden = false;
 }
 
+function goToLocation(locationName,returnNum)
+{
+    var nameToSet = ''; // titlebar name
+    var nonCombat = true; // how to configure the sidenav and etc
+
+    switch(locationName)
+    {
+        case 'town':
+            nameToSet = 'Roc Town';
+            nonCombat = true;
+            setLocation("Roc Town");
+            break;
+        
+        case 'dungeon1':
+            nameToSet = 'Mtn. Dungeon';
+            nonCombat = false;
+            setLocation("dungeon1");
+            break;
+        
+        case 'dungeon2':
+            nameToSet = 'Plateau Dungeon';
+            nonCombat = false;
+            setLocation("dungeon2");
+            break;
+    }
+    setAllCenterPagesToHidden(centerPage);
+    setMostSideNavToHidden();
+    if(nonCombat)
+    {
+        setCombatSideNavToHidden();
+
+        // show sell button in inventory
+        var elements = document.getElementsByClassName('itemButton');
+        for(var i = 0; i < elements.length; i++)
+        {
+            if(elements.item(i).innerHTML == 'Sell')
+            {
+                elements.item(i).hidden = false;
+            }
+        }
+        setMostSideNavToVisible();
+        loadCharacterSheet();
+    }
+    else
+    {
+        setCombatSideNavToVisible();
+
+        // hide sell button in inventory
+        var elements = document.getElementsByClassName('itemButton');
+        for(var i = 0; i < elements.length; i++)
+        {
+            if(elements.item(i).innerHTML == 'Sell')
+            {
+                elements.item(i).hidden = true;
+            }
+        }
+
+        document.getElementById(centerPage.sidenavCharacterName).hidden = false;
+        document.getElementById(centerPage.sidenavInventoryName).hidden = false;
+        document.getElementById(centerPage.sidenavCreditsName).hidden = false;
+
+        document.getElementById(centerPage.combatPageName).hidden = false;
+    }
+}
+
 
 // ----------------- SETTERS --------------------
+
+// type: 0 = normal. 1 = bomb
+function combatAttack(type)
+{
+
+}
+
+// reduce damage from enemy by 50% for this turn.
+function combatDefend()
+{
+    
+}
+
+// player loses half their gold
+function combatEscape()
+{
+    setGold( Math.ceil(playerData.gold / 2) );
+    goToLocation('town',0)
+}
 
 
 function setName(name)
@@ -811,6 +910,7 @@ function removeFromInventory(name,action)
 
             case 'bomb':
                 playerData.inventory[name] -= 1;
+                combatAttack(1);
                 break;
 
             case 'kingsBlade':

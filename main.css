@@ -650,3 +650,76 @@ li
 {
     background-color: var(--lightgrey);
 }
+
+/* ------------------------------------------ */
+/* Combat page */
+
+.combatPageRowInfoName
+{
+    width: 100px;
+    text-align: right;
+    padding: 0px 10px 0px 0px;/* top, right, bottom, left */
+}
+
+.combatPageRowInfoValue
+{
+    width: 250px;
+    text-align: left;
+    padding: 0px 10px 0px 10px;/* top, right, bottom, left */
+}
+
+#combatPageImg
+{
+    padding: 20px 20px 0px 20px;/* top, right, bottom, left */
+}
+
+#combatSecondaryAttributeBox
+{
+    border-top: 1px solid var(--lightgrey);
+}
+
+#combatPageTable
+{
+    padding: 30px 0px 0px 0px; /* top, right, bottom, left */
+}
+
+#combatPageTable td 
+{
+    vertical-align: top;
+}
+
+.combatPageRowInfoValuePadding
+{
+    padding: 2px; /* top */
+}
+
+#combatPageRow1
+{
+    border-left: 1px solid var(--lightgrey);
+}
+
+.combatButton 
+{
+    padding: 8px 8px;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: var(--white);
+    background-color: var(--middleblue);
+    border: none;
+    border-radius: 4px;
+    box-shadow: 0 4px #999;
+}
+  
+.combatButton:hover 
+{
+      background-color: var(--darkblue);
+}
+  
+.combatButton:active 
+{
+    background-color: var(--lightblue);
+    box-shadow: 0 1px var(--lightgrey);
+    transform: translateY(4px);
+}

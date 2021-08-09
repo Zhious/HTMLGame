@@ -45,9 +45,75 @@
     </div>
     <div id="mapPage" hidden>
         <class='sidenavTableRowImg'><img src="assets/mainMapSprite.svg" width="1280" height="720">
-        <button id="mapButtonTown">Roc Town</button>
-        <button id="mapButtonDungeon1">Mtn. Dungeon</button>
-        <button id="mapButtonDungeon2">Plateau Dungeon</button>
+        <button onclick="goToLocation('town',0);" id="mapButtonTown">Roc Town</button>
+        <button onclick="goToLocation('dungeon1',0);" id="mapButtonDungeon1">Mtn. Dungeon</button>
+        <button onclick="goToLocation('dungeon2',0);" id="mapButtonDungeon2">Plateau Dungeon</button>
+    </div>
+
+    <div id="combatPage" hidden>
+        <table id="combatPageTable">
+            <tbody>
+                <tr id="combatPageRow1">
+                    <td rowspan="2">
+                        <img id="combatPageImg" src="assets/enemyImpSprite.svg" width=256px height=256px>
+                    </td>
+                    <td class='combatPageRowInfoName' id="combatPrimaryAttributeBox">
+                        <div class="tooltip">
+                            Name
+                            <span class="tooltipText">
+                                Name of the enemy.
+                            </span>
+                        </div>
+                        <br>
+                        <div class="tooltip">
+                            Enemy's HP
+                            <span class="tooltipText">
+                                How much health the enemy currently has.
+                            </span>
+                        </div>
+                        <div class="tooltip">
+                            Enemy Armor
+                            <span class="tooltipText">
+                                How much armor the enemy has.
+                            </span>
+                        </div>
+                        <div class="tooltip">
+                            Est. Damage
+                            <span class="tooltipText">
+                                Damage of the enemy.<br>Player armor/skills not included.
+                            </span>
+                        </div>
+                    </td>
+                    <td class='combatPageRowInfoValue' id="combatPrimaryAttributeBox">
+                        <div class='enemyName'></div><div class="combatPageRowInfoValuePadding"></div>
+                        <div class="enemyHealth"></div><div class="combatPageRowInfoValuePadding"></div>
+                        <div class="characterMaxHealth"></div><div class="combatPageRowInfoValuePadding"></div>
+                        <div class="characterMaxHealth"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <tr id="combatPageRow2">
+                <td>
+                    <button onclick="combatAttack(0);" class="combatButton" title="Hello World!" type="button">Attack</button>
+                    <button onclick="combatDefend();" class="combatButton" title="Hello World!" type="button">Defend</button>
+                </td>
+            </tr>
+            <tr id="combatPageRowPadding"></tr><tr id="combatPageRowPadding"></tr>
+            <tr id="combatPageRow3">
+                <td>
+                    <button onclick="removeFromInventory('healthPotion','use');" class="combatButton" type="button">Use Health Potion</button>
+                    <button onclick="removeFromInventory('bomb','use');" class="combatButton" type="button">Use Bomb</button>
+                </td>
+            </tr>
+            <tr id="combatPageRowPadding"></tr><tr id="combatPageRowPadding"></tr>
+            <tr id="combatPageRow4">
+                <td>
+                    <button onclick="combatEscape();" class="combatButton" type="button">Escape</button>
+                </td>
+            </tr>
+        </table>
     </div>
 
 
@@ -170,7 +236,7 @@
                             <div class="tooltip">
                                 Bomb
                                 <span class="tooltipText">
-                                    Could be used to open dungeons.
+                                    Deal 100 damage to enemies.
                                 </span>
                             </div>
                         </p>
@@ -480,7 +546,7 @@
                             <div class="tooltip">
                                 Bomb
                                 <span class="tooltipText">
-                                    Could be used to open dungeons.
+                                    Deal 100 damage to enemies.
                                 </span>
                             </div>
                         </p>
@@ -743,6 +809,11 @@
 
     <table id="sidebarTable">
         <tbody>
+            <tr onclick="sidenavRowClick(-1)" id="sidenavCombatRow" class="sidenavRows" hidden>
+                <td class='sidenavTableRowImg'><img src="assets/combatSprite.svg" alt="combatSprite" width="32" height="32"></td>
+                <td class='sidenavTableRowName'><p>Combat</p></td>
+                <td class='sidenavTableRowDescription'><p></p></p></td>
+            </tr>
             <tr onclick="sidenavRowClick(0)" id="sidenavMapRow" class="sidenavRows" hidden>
                 <td class='sidenavTableRowImg'><img src="assets/mapSprite.svg" alt="mapSprite" width="32" height="32"></td>
                 <td class='sidenavTableRowName'><p>Map</p></td>
