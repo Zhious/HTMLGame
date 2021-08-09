@@ -1,5 +1,5 @@
 // made by Aaron Starr
-// Copyright, Aaron Starr. All rights reserved. Redistribution and use of this content including art, with or without modification, is prohibited. Except as represented in this agreement, all work product by Aaron Starr is provided "as-is". Other than as provided in this agreement, Aaron Starr makes no other warranties, express or implied, and hereby disclaims all implied warranties. Requests for; amendments, warranties, copyright information, questions, or permissions, please contact aaronstarrdev@gmail.com
+// Copyright, Aaron Starr. All rights reserved. Redistribution of this content, including art, with or without modification, is prohibited. 
 
 // i didnt know about json files and other ways to save and load data, so the inventory system is very limited. Guess something to think about if i make another html thing.
 
@@ -8,13 +8,15 @@
 // global var for player data
 const playerData = {
     name:"",
-    maxhealth:100, // increased through function addLevel()
+    maxhealth:100,
     health:0,
     gold:0,
     level:0,
     xp:0,
     weapon:"",
     armor:"",
+    trainingApplied:false,
+    trainingAmount:0,
     inventory:{
         healthPotion: 0,
         bomb: 0,
@@ -207,13 +209,13 @@ function loadStoreSheet()
 // load, save system
 function loadSave()
 {
-    setMostSideNavToHidden(centerPage);
+    //setMostSideNavToHidden(centerPage);
 }
 
 // load, load file system
 function loadLoad()
 {
-    setMostSideNavToVisible(centerPage);
+    //setMostSideNavToVisible(centerPage);
 }
 
 // load the center page with the credits html
@@ -295,6 +297,75 @@ function setGold(newGold)
     playerData.gold = newGold;
 }
 
+// hide lower and higher tier items that arent for purchase
+function updateStorePage()
+{
+    switch(playerData.weapon)
+    {
+        case 'Rusty Sword':
+            document.getElementById('ironSwordItem').hidden = false;
+            break;
+
+        case 'Iron Sword':
+            document.getElementById('ironSwordItem').hidden = true;
+            document.getElementById('steelSwordItem').hidden = false;
+            break;
+        
+        case 'Steel Sword':
+            document.getElementById('steelSwordItem').hidden = true;
+            document.getElementById('sharpSteelSwordItem').hidden = false;
+            break;
+        
+        case 'Sharp Steel Sword':
+            document.getElementById('sharpSteelSwordItem').hidden = true;
+            document.getElementById('imbuedSwordItem').hidden = false;
+            break;
+
+        case 'Imbued Sword':
+            document.getElementById('imbuedSwordItem').hidden = true;
+            break;
+
+        case "King's Sword":
+            document.getElementById('ironSwordItem').hidden = true;
+            document.getElementById('steelSwordItem').hidden = true;
+            document.getElementById('sharpSteelSwordItem').hidden = true;
+            document.getElementById('imbuedSwordItem').hidden = true;
+            break;
+    }
+    switch(playerData.armor)
+    {
+        case 'Tattered Cloth':
+            document.getElementById('clothArmorItem').hidden = false;
+            break;
+
+        case 'Cloth Armor':
+            document.getElementById('clothArmorItem').hidden = true;
+            document.getElementById('leatherArmorItem').hidden = false;
+            break;
+        
+        case 'Leather Armor':
+            document.getElementById('leatherArmorItem').hidden = true;
+            document.getElementById('breastPlateItem').hidden = false;
+            break;
+        
+        case 'Breast Plate':
+            document.getElementById('breastPlateItem').hidden = true;
+            document.getElementById('fullPlateItem').hidden = false;
+            break;
+
+        case 'Full Plate':
+            document.getElementById('fullPlateItem').hidden = true;
+            break;
+
+        case "King's Plate":
+            document.getElementById('clothArmorItem').hidden = true;
+            document.getElementById('leatherArmorItem').hidden = true;
+            document.getElementById('breastPlateItem').hidden = true;
+            document.getElementById('fullPlateItem').hidden = true;
+            break;
+    }
+}
+
 // best case would be to actually create some weapon objects, but that aint this.
 // Rusty Sword - +0 Damage
 // Iron Sword - +3 Damage
@@ -313,6 +384,8 @@ function setWeapon(weapon)
 
     // update data
     playerData.weapon = weapon;
+
+    updateStorePage();
 }
 
 // best case would be to actually create some armor objects, but that aint this.
@@ -332,7 +405,48 @@ function setArmor(armor)
     }
 
     // update data
+    var originalArmor = playerData.armor;
     playerData.armor = armor;
+
+    updateStorePage();
+
+    var armorStat = 0;
+    switch(armor)
+    {
+        case 'Tattered Cloth':
+            break;
+
+        case 'Cloth Armor':
+            armorStat = 1;
+            break;
+        
+        case 'Leather Armor':
+            armorStat = 2;
+            break;
+        
+        case 'Breast Plate':
+            armorStat = 3;
+            break;
+
+        case 'Full Plate':
+            armorStat = 4;
+            break;
+
+        case "King's Plate":
+            armorStat = 5;
+            break; 
+    }
+    if(playerData.skills['training'] == 1 && (!playerData.trainingApplied || originalArmor != playerData.armor) )
+    {
+        playerData.maxhealth += (10 * armorStat);
+        var maxHealthElements = document.getElementsByClassName("characterMaxHealth");
+        for(var i = 0; i < maxHealthElements.length; i++)
+        {
+            maxHealthElements.item(i).innerHTML = playerData.maxhealth;
+        }
+        playerData.trainingApplied = true;
+        playerData.trainingAmount = (10 * armorStat);
+    }
 }
 
 // Experience Levels as follows
@@ -429,11 +543,28 @@ function addToSkills(skill)
 
         // update view
         document.getElementById(skill.toLowerCase() + "SkillBox").style.backgroundColor = "#0B5345";
+
+        if(skill == "training")
+        {
+            setArmor(playerData.armor);
+        }
     }
     else if( alreadyHasSkill && (skill.toLowerCase() != "haggle") ) // already has skill, so remove it and give back skillpoint
     {
         playerData.skills[skill] = 0;
         setSkillPoints( (playerData.skillPoints + 1) )
+
+        if(skill.toLowerCase() == "training")
+        {
+            playerData.maxhealth -= playerData.trainingAmount;
+            var maxHealthElements = document.getElementsByClassName("characterMaxHealth");
+            for(var i = 0; i < maxHealthElements.length; i++)
+            {
+                maxHealthElements.item(i).innerHTML = playerData.maxhealth;
+            }
+            playerData.trainingApplied = false;
+            playerData.trainingAmount = 0;
+        }
 
         // update view
         document.getElementById(skill.toLowerCase() + "SkillBox").style.backgroundColor = "#232A35";
@@ -460,19 +591,122 @@ function updateInventoryView()
 }
 
 // add item to inventory. If it already exists, increment value by amount
-function addToInventory(item,amount)
+// aquisition 0 = free, 1 = bought
+function addToInventory(item,amount,aquisition)
 {
-    // update view
-
     // update data
-    if(playerData.inventory[item])
+    if(aquisition == 0)
     {
-        playerData.inventory[item] += amount;
+        if(playerData.inventory[item])
+        {
+            playerData.inventory[item] += amount;
+        }
+        else
+        {
+            playerData.inventory[item] = amount;
+        }
     }
     else
     {
-        playerData.inventory[item] = amount;
+        switch(item)
+        {
+            case 'healthPotion':
+                if(playerData.gold >= 50)
+                {
+                    setGold(playerData.gold -= 50);
+                    if(playerData.inventory[item])
+                    {
+                        playerData.inventory[item] += amount;
+                    }
+                    else
+                    {
+                        playerData.inventory[item] = amount;
+                    }
+                }
+                break;
+
+            case 'bomb':
+                if(playerData.gold >= 100)
+                {
+                    setGold(playerData.gold -= 100);
+                    if(playerData.inventory[item])
+                    {
+                        playerData.inventory[item] += amount;
+                    }
+                    else
+                    {
+                        playerData.inventory[item] = amount;
+                    }
+                }
+                break;
+
+            // item checks should help rpevent element editting in a webpage
+            case 'ironSword':
+                if(playerData.gold >= 100 && (playerData.weapon == "Rusty Sword") )
+                {
+                    setGold(playerData.gold -= 100);
+                    setWeapon("Iron Sword");
+                }
+                break;
+
+            case 'steelSword':
+                if(playerData.gold >= 200 && (playerData.weapon == "Iron Sword"))
+                {
+                    setGold(playerData.gold -= 200);
+                    setWeapon("Steel Sword");
+                }
+                break;
+
+            case 'sharpSteelSword':
+                if(playerData.gold >= 300 && (playerData.weapon == "Steel Sword"))
+                {
+                    setGold(playerData.gold -= 300);
+                    setWeapon("Sharp Steel Sword");
+                }
+                break;
+
+            case 'imbuedSword':
+                if(playerData.gold >= 400 && (playerData.weapon == "Sharp Steel Sword"))
+                {
+                    setGold(playerData.gold -= 400);
+                    setWeapon("Imbued Sword");
+                }
+                break;
+
+            case 'clothArmor':
+                if(playerData.gold >= 100 && (playerData.armor == "Tattered Cloth"))
+                {
+                    setGold(playerData.gold -= 100);
+                    setArmor("Cloth Armor");
+                }
+                break;
+
+            case 'leatherArmor':
+                if(playerData.gold >= 200 && (playerData.armor == "Cloth Armor"))
+                {
+                    setGold(playerData.gold -= 200);
+                    setArmor("Leather Armor");
+                }
+                break;
+
+            case 'breastPlate':
+                if(playerData.gold >= 300 && (playerData.armor == "Leather Armor"))
+                {
+                    setGold(playerData.gold -= 300);
+                    setArmor("Breast Plate");
+                }
+                break;
+
+            case 'fullPlate':
+                if(playerData.gold >= 400 && (playerData.armor == "Breast Plate"))
+                {
+                    setGold(playerData.gold -= 400);
+                    setArmor("Full Plate");
+                }
+                break;
+        }
     }
+    updateInventoryView()
 }
 
 function removeFromInventory(name,action)
@@ -498,7 +732,7 @@ function removeFromInventory(name,action)
 
             case 'kingsBlade':
             case 'kingsHilt':
-                if( (playerData.inventory['kingsBlade'] >= 1) && (playerData.inventory['kingsHilt'] >= 1) )
+                if( (playerData.inventory['kingsBlade'] >= 1) && (playerData.inventory['kingsHilt'] >= 1) && (gameData.currentLocation == "Roc Town") )
                 {
                     setWeapon("King's Sword");
                     document.getElementById('kingsHilt' + "UseButton").hidden = true;
@@ -510,7 +744,7 @@ function removeFromInventory(name,action)
 
             case 'kingsBarding':
             case 'kingsPlateMetal':
-                if( (playerData.inventory['kingsBarding'] >= 1) && (playerData.inventory['kingsPlateMetal'] >= 1) )
+                if( (playerData.inventory['kingsBarding'] >= 1) && (playerData.inventory['kingsPlateMetal'] >= 1) && (gameData.currentLocation == "Roc Town") )
                 {
                     setArmor("King's Plate");
                     document.getElementById('kingsBarding' + "UseButton").hidden = true;
@@ -522,7 +756,7 @@ function removeFromInventory(name,action)
         }
         updateInventoryView()
     }
-    else if(action == 'sell')
+    else if(action == 'sell' && (gameData.currentLocation == "Roc Town"))
     {
         switch(name)
         {
@@ -571,7 +805,7 @@ function setLocation(location)
     document.getElementById("sidenavMapName").innerHTML = location;
 
     // update data
-    gameData.location = location;
+    gameData.currentLocation = location;
 }
 
 // set town stage, or the level fo the town
@@ -579,7 +813,7 @@ function setLocation(location)
 // 1 = carpenter comes, builds his store/house. can be used for thematically building others' stores/houses. Also unlocks dungeon 2
 // 2 = blacksmith comes, can upgrade armor and weapons, Also unlocks dungeon 3
 // 3 = Arena Master comes, player can fight by betting money and winning.
-function setTownStage(stage)
+function setTownStage(stage) // not implemented
 {
     // update view
 
@@ -628,7 +862,7 @@ function startButtonPressed()
     //setHealth(90);
 
     // GOLD
-    setGold(50);
+    setGold(5000);
 
     // WEAPON
     setWeapon("Rusty Sword");
@@ -637,12 +871,12 @@ function startButtonPressed()
     setArmor("Tattered Cloth");
 
     // INVENTORY
-    addToInventory("healthPotion",2);
-    addToInventory("bomb",1);
-    addToInventory("kingsBarding",3);
-    addToInventory("kingsPlateMetal",3);
-    addToInventory("kingsHilt",1);
-    addToInventory("kingsBlade",2);
+    addToInventory("healthPotion",2,0);
+    addToInventory("bomb",1,0);
+    addToInventory("kingsBarding",3,0);
+    addToInventory("kingsPlateMetal",3,0);
+    addToInventory("kingsHilt",1,0);
+    addToInventory("kingsBlade",2,0);
 
     // EXPERIENCE
     addExperience(305);

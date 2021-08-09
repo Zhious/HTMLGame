@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <!–– Made by Aaron Starr -->
-    <!-- Copyright, Aaron Starr. All rights reserved. Redistribution and use of this content including art, with or without modification, is prohibited. Except as represented in this agreement, all work product by Aaron Starr is provided "as-is". Other than as provided in this agreement, Aaron Starr makes no other warranties, express or implied, and hereby disclaims all implied warranties. Requests for; amendments, warranties, copyright information, questions, or permissions, please contact aaronstarrdev@gmail.com -->
+    <!-- Copyright, Aaron Starr. All rights reserved. Redistribution of this content, including art, with or without modification, is prohibited. -->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -103,7 +103,7 @@
                         <div class="tooltip">
                             Max HP
                             <span class="tooltipText">
-                                Taking damage reduces hp. <br>When at, or below, 0. You die.
+                                Current hp cannot go about this amount.
                             </span>
                         </div>
                         <br>
@@ -230,7 +230,7 @@
                             <div class="tooltip">
                                 King's Hilt
                                 <span class="tooltipText">
-                                    1 of 2 parts of a great sword. <br>Needs a Blade.
+                                    1 of 2 parts of a great sword. <br>Needs a Blade.<br>Can only be made in town.
                                 </span>
                             </div>
                         </p>
@@ -257,7 +257,7 @@
                             <div class="tooltip">
                                 King's Blade
                                 <span class="tooltipText">
-                                    1 of 2 parts of a great sword. <br>Needs a Hilt.
+                                    1 of 2 parts of a great sword. <br>Needs a Hilt.<br>Can only be made in town.
                                 </span>
                             </div>
                         </p>
@@ -284,7 +284,7 @@
                             <div class="tooltip">
                                 King's Barding
                                 <span class="tooltipText">
-                                    1 of 2 parts of an excellent armor. <br>Needs some Plate Metal.
+                                    1 of 2 parts of an excellent armor. <br>Needs some Plate Metal.<br>Can only be made in town.
                                 </span>
                             </div>
                         </p>
@@ -311,7 +311,7 @@
                             <div class="tooltip">
                                 King's Plate Metal
                                 <span class="tooltipText">
-                                    1 of 2 parts of an excellent armor. <br>Needs some Barding.
+                                    1 of 2 parts of an excellent armor. <br>Needs some Barding.<br>Can only be made in town.
                                 </span>
                             </div>
                         </p>
@@ -469,18 +469,278 @@
 
 
     <div id="storePage" hidden>
-        <p id="msg">Store:</p>
-        <ul>
-            <table id="centerTable">
-                <tbody>
-                    <tr>
-                        <td class='sidenavTableRowImg'><img src="assets/Small_Brown_Bag.png" width=32px height=32px></td>
-                        <td class='sidenavTableRowName'><p>Store</p></td>
-                        <td class='sidenavTableRowDescription'><p id="TEST5">0 GP</p></td>
-                    </tr>
-                </tbody>
-            </table>
-        </ul>
+        <table id="storeTable">
+            <thead>
+                <tr>
+                    <th rowspan="2" id="storeImageTableHead"></th>
+                    <th rowspan="2">Item</th>
+                    <th rowspan="2">Cost</th>
+                    <th rowspan="2">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="healthPotionItem">
+                    <td class='storeItemSprite'>
+                        <img src="assets/healthPotionSprite.svg" width=64px height=64px>
+                    </td>
+                    <td class='storeItemName'>
+                        <p>
+                            <div class="tooltip">
+                                Health Potion
+                                <span class="tooltipText">
+                                    On use, heals the user for 25% of their max hp.<br>Does not overheal.
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='storeItemCost'>
+                        <p>
+                            50
+                        </p>
+                    </td>
+                    <td class='storeItemActions'>
+                        <p>
+                            <button onclick="addToInventory('healthPotion',1,1);" class="itemButton" type="button">Buy</button>
+                        </p>
+                    </td>
+                </tr>
+
+                <tr id="bombItem">
+                    <td class='storeItemSprite'>
+                        <img src="assets/bombSprite.svg" width=64px height=64px>
+                    </td>
+                    <td class='storeItemName'>
+                        <p>
+                            <div class="tooltip">
+                                Bomb
+                                <span class="tooltipText">
+                                    Could be used to open dungeons.
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='storeItemCost'>
+                        <p>
+                            100
+                        </p>
+                    </td>
+                    <td class='storeItemActions'>
+                        <p>
+                            <button onclick="addToInventory('bomb',1,1);" class="itemButton" type="button">Buy</button>
+                        </p>
+                    </td>
+                </tr>
+
+                <tr id="ironSwordItem" hidden>
+                    <td class='storeItemSprite'>
+                        <img src="assets/ironSwordSprite.svg" width=64px height=64px>
+                    </td>
+                    <td class='storeItemName'>
+                        <p>
+                            <div class="tooltip">
+                                Iron Sword
+                                <span class="tooltipText">
+                                    Tier 1. Damage +3
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='storeItemCost'>
+                        <p>
+                            100
+                        </p>
+                    </td>
+                    <td class='storeItemActions'>
+                        <p>
+                            <button onclick="addToInventory('ironSword',1,1);" class="itemButton" type="button">Upgrade</button>
+                        </p>
+                    </td>
+                </tr>
+
+                <tr id="steelSwordItem" hidden>
+                    <td class='storeItemSprite'>
+                        <img src="assets/steelSwordSprite.svg" width=64px height=64px>
+                    </td>
+                    <td class='storeItemName'>
+                        <p>
+                            <div class="tooltip">
+                                Steel Sword
+                                <span class="tooltipText">
+                                    Tier 2. Damage +6
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='storeItemCost'>
+                        <p>
+                            200
+                        </p>
+                    </td>
+                    <td class='storeItemActions'>
+                        <p>
+                            <button onclick="addToInventory('steelSword',1,1);" class="itemButton" type="button">Upgrade</button>
+                        </p>
+                    </td>
+                </tr>
+                
+                <tr id="sharpSteelSwordItem" hidden>
+                    <td class='storeItemSprite'>
+                        <img src="assets/sharpSteelSwordSprite.svg" width=64px height=64px>
+                    </td>
+                    <td class='storeItemName'>
+                        <p>
+                            <div class="tooltip">
+                                Sharp Steel Sword
+                                <span class="tooltipText">
+                                    Tier 3. Damage +9
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='storeItemCost'>
+                        <p>
+                            300
+                        </p>
+                    </td>
+                    <td class='storeItemActions'>
+                        <p>
+                            <button onclick="addToInventory('sharpSteelSword',1,1);" class="itemButton" type="button">Upgrade</button>
+                        </p>
+                    </td>
+                </tr>
+
+                <tr id="imbuedSwordItem" hidden>
+                    <td class='storeItemSprite'>
+                        <img src="assets/imbuedSwordSprite.svg" width=64px height=64px>
+                    </td>
+                    <td class='storeItemName'>
+                        <p>
+                            <div class="tooltip">
+                                Imbued Sword
+                                <span class="tooltipText">
+                                    Tier 4. Damage +12
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='storeItemCost'>
+                        <p>
+                            400
+                        </p>
+                    </td>
+                    <td class='storeItemActions'>
+                        <p>
+                            <button onclick="addToInventory('imbuedSword',1,1);" class="itemButton" type="button">Upgrade</button>
+                        </p>
+                    </td>
+                </tr>
+                
+                <tr id="clothArmorItem" hidden>
+                    <td class='storeItemSprite'>
+                        <img src="assets/clothArmorSprite.svg" width=64px height=64px>
+                    </td>
+                    <td class='storeItemName'>
+                        <p>
+                            <div class="tooltip">
+                                Cloth Armor
+                                <span class="tooltipText">
+                                    Tier 1. Armor +1
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='storeItemCost'>
+                        <p>
+                            100
+                        </p>
+                    </td>
+                    <td class='storeItemActions'>
+                        <p>
+                            <button onclick="addToInventory('clothArmor',1,1);" class="itemButton" type="button">Upgrade</button>
+                        </p>
+                    </td>
+                </tr>
+
+                <tr id="leatherArmorItem" hidden>
+                    <td class='storeItemSprite'>
+                        <img src="assets/leatherArmorSprite.svg" width=64px height=64px>
+                    </td>
+                    <td class='storeItemName'>
+                        <p>
+                            <div class="tooltip">
+                                Leather Armor
+                                <span class="tooltipText">
+                                    Tier 2. Armor +2
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='storeItemCost'>
+                        <p>
+                            200
+                        </p>
+                    </td>
+                    <td class='storeItemActions'>
+                        <p>
+                            <button onclick="addToInventory('leatherArmor',1,1);" class="itemButton" type="button">Upgrade</button>
+                        </p>
+                    </td>
+                </tr>
+                
+                <tr id="breastPlateItem" hidden>
+                    <td class='storeItemSprite'>
+                        <img src="assets/breastPlateSprite.svg" width=64px height=64px>
+                    </td>
+                    <td class='storeItemName'>
+                        <p>
+                            <div class="tooltip">
+                                Breast Plate
+                                <span class="tooltipText">
+                                    Tier 3. Armor +3
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='storeItemCost'>
+                        <p>
+                            300
+                        </p>
+                    </td>
+                    <td class='storeItemActions'>
+                        <p>
+                            <button onclick="addToInventory('breastPlate',1,1);" class="itemButton" type="button">Upgrade</button>
+                        </p>
+                    </td>
+                </tr>
+
+                <tr id="fullPlateItem" hidden>
+                    <td class='storeItemSprite'>
+                        <img src="assets/fullPlateSprite.svg" width=64px height=64px>
+                    </td>
+                    <td class='storeItemName'>
+                        <p>
+                            <div class="tooltip">
+                                Full Plate
+                                <span class="tooltipText">
+                                    Tier 4. Armor +4
+                                </span>
+                            </div>
+                        </p>
+                    </td>
+                    <td class='storeItemCost'>
+                        <p>
+                            400
+                        </p>
+                    </td>
+                    <td class='storeItemActions'>
+                        <p>
+                            <button onclick="addToInventory('fullPlate',1,1);" class="itemButton" type="button">Upgrade</button>
+                        </p>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
     </div>
 
 
@@ -527,7 +787,7 @@
             <tr onclick="sidenavRowClick(1)" id="sidenavCharacterRow" class="sidenavRows" hidden>
                 <td class='sidenavTableRowImg'><img src="assets/characterSprite.svg" alt="characterSprite" width="32" height="32"></td>
                 <td class='sidenavTableRowName'><p>Character</p></td>
-                <td class='sidenavTableRowDescription'><p class="characterName"></p><p class="characterHealth"></p></td>
+                <td class='sidenavTableRowDescription'><p></p><p class="characterHealth"></p></td>
             </tr>
             <tr onclick="sidenavRowClick(2)" id="sidenavInventoryRow" class="sidenavRows" hidden>
                 <td class='sidenavTableRowImg'><img src="assets/inventorySprite.svg" alt="inventorySprite" width=32px height=32px></td>
@@ -546,12 +806,12 @@
             </tr>
             <tr onclick="sidenavRowClick(5)" id="sidenavSaveRow" class="sidenavRows" hidden>
                 <td class='sidenavTableRowImg'><img src="assets/saveFileSprite.svg" alt="saveSprite" width=32px height=32px></td>
-                <td class='sidenavTableRowName'><p>Save</p></td>
+                <td class='sidenavTableRowName'><p>TODO</p></td>
                 <td class='sidenavTableRowDescription'><p id="sidenavSave"></p></td>
             </tr>
             <tr onclick="sidenavRowClick(6)" id="sidenavLoadRow" class="sidenavRows">
                 <td class='sidenavTableRowImg'><img src="assets/loadFileSprite.svg" alt="loadSprite" width=32px height=32px></td>
-                <td class='sidenavTableRowName'><p>Load</p></td>
+                <td class='sidenavTableRowName'><p>TODO</p></td>
                 <td class='sidenavTableRowDescription'><p id="sidenavLoad"></p></td>
             </tr>
             <tr onclick="sidenavRowClick(7)" id="sidenavCreditsRow" class="sidenavRows" hidden>

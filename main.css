@@ -1,5 +1,5 @@
 /* made by Aaron Starr */
-/* Copyright, Aaron Starr. All rights reserved. Redistribution and use of this content including art, with or without modification, is prohibited. Except as represented in this agreement, all work product by Aaron Starr is provided "as-is". Other than as provided in this agreement, Aaron Starr makes no other warranties, express or implied, and hereby disclaims all implied warranties. Requests for; amendments, warranties, copyright information, questions, or permissions, please contact aaronstarrdev@gmail.com */
+/* Copyright, Aaron Starr. All rights reserved. Redistribution of this content including art, with or without modification, is prohibited. */
 
 :root 
 {
@@ -528,4 +528,41 @@ li
     background-color: var(--lightgreen);
     box-shadow: 0 1px var(--lightgrey);
     transform: translateY(4px);
+}
+
+/* -------------------------------------------------- */
+/* Store Page */
+
+#storeTable
+{
+    border-collapse: collapse;
+    border: 1px solid var(--lightgrey);
+    padding: 30px 0px 0px 0px;/* top, right, bottom, left */
+}
+
+#storeTable th
+{
+    color: var(--lightblue);
+    font-size: 20px;
+    border: 3px solid var(--lightgrey);
+}
+
+#storeTable td 
+{
+    vertical-align: top;
+    text-align: center; 
+    border: 1px solid var(--lightgrey);
+}
+
+#storeTable th 
+{
+    padding: 30px 50px 30px 50px;/* top, right, bottom, left */
+    vertical-align: middle; 
+    text-align: center; 
+}
+
+.storeItemName
+{
+    vertical-align: top;
+    text-align: center; 
 }
