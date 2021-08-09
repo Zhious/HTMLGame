@@ -14,7 +14,9 @@ const playerData = {
     level:0,
     xp:0,
     weapon:"",
+    weaponBonus:0,
     armor:"",
+    armorReduction:0,
     trainingApplied:false,
     trainingAmount:0,
     inventory:{
@@ -423,6 +425,33 @@ function setWeapon(weapon)
     // update data
     playerData.weapon = weapon;
 
+    switch(weapon)
+    {
+        case 'Rusty Sword':
+            playerData.weaponBonus = 0;
+            break;
+
+        case 'Iron Sword':
+            playerData.weaponBonus = 3;
+            break;
+        
+        case 'Steel Sword':
+            playerData.weaponBonus = 6;
+            break;
+        
+        case 'Sharp Steel Sword':
+            playerData.weaponBonus = 9;
+            break;
+
+        case 'Imbued Sword':
+            playerData.weaponBonus = 12;
+            break;
+
+        case "King's Sword":
+            playerData.weaponBonus = 15;
+            break; 
+    }
+
     updateStorePage();
 }
 
@@ -452,26 +481,32 @@ function setArmor(armor)
     switch(armor)
     {
         case 'Tattered Cloth':
+            playerData.armorReduction = 0;
             break;
 
         case 'Cloth Armor':
             armorStat = 1;
+            playerData.armorReduction = 1;
             break;
         
         case 'Leather Armor':
             armorStat = 2;
+            playerData.armorReduction = 2;
             break;
         
         case 'Breast Plate':
             armorStat = 3;
+            playerData.armorReduction = 3;
             break;
 
         case 'Full Plate':
             armorStat = 4;
+            playerData.armorReduction = 4;
             break;
 
         case "King's Plate":
             armorStat = 5;
+            playerData.armorReduction = 5;
             break; 
     }
     if(playerData.skills['training'] == 1 && (!playerData.trainingApplied || originalArmor != playerData.armor) )
@@ -595,6 +630,11 @@ function addToSkills(skill)
         if(skill.toLowerCase() == "training")
         {
             playerData.maxhealth -= playerData.trainingAmount;
+            if(playerData.health > playerData.maxhealth)
+            {
+                setHealth(playerData.maxhealth);
+            }
+
             var maxHealthElements = document.getElementsByClassName("characterMaxHealth");
             for(var i = 0; i < maxHealthElements.length; i++)
             {
