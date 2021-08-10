@@ -39,7 +39,6 @@
             TODO:
         </p>
         <ul>
-            <li>Map functionality</li>
             <li>combat</li>
         </ul>
     </div>
@@ -86,7 +85,7 @@
                     </td>
                     <td class='combatPageRowInfoValue' id="combatPrimaryAttributeBox">
                         <div class='enemyName'></div><div class="combatPageRowInfoValuePadding"></div>
-                        <div class="enemyHealth"></div><div class="combatPageRowInfoValuePadding"></div>
+                        <div class="enemyHealth" id="enemyHealth"></div><div class="combatPageRowInfoValuePadding"></div>
                         <div id="enemyArmor"></div><div class="combatPageRowInfoValuePadding"></div>
                         <div id="enemyDamageEst"></div>
                     </td>
@@ -96,8 +95,8 @@
         <table>
             <tr id="combatPageRow2">
                 <td>
-                    <button onclick="combatAttack(0);" class="combatButton" title="Hello World!" type="button">Attack</button>
-                    <button onclick="combatDefend();" class="combatButton" title="Hello World!" type="button">Defend</button>
+                    <button onclick="combatAttack(0);" class="combatButton" type="button">Attack</button>
+                    <button onclick="combatDefend();" class="combatButton" type="button">Defend</button>
                 </td>
             </tr>
             <tr id="combatPageRowPadding"></tr><tr id="combatPageRowPadding"></tr>

@@ -39,14 +39,13 @@ const playerData = {
         tempered: 0,
     },
     skillPoints:0,
-    totalKills:0
+    totalKills:0,
+    rendTurnsRemaining:0
 };
 
 // global var for game data
 const gameData = {
     currentLocation:"",
-    townStage:0,
-    dungeonStage:0,
     healthPotionCost:50,
     bombCost:100,
     ironSwordCost:100,
@@ -59,6 +58,10 @@ const gameData = {
     fullPlateCost:400,
     haggleApplied:false,
     enemiesRemaining:0,
+    currentEnemyType:0,
+    currentEnemyHealth:0,
+    currentEnemyArmor:0,
+    currentEnemyDamage:"0-0",
     mtnEnemies:{
         Imp:25,
         Gobbo:30,
@@ -81,7 +84,8 @@ const gameData = {
     },
     platBoss:{
         ChiefRaider:250
-    }
+    },
+    bossFirstTurn:false
 };
 
 /* center page obj constuctor */
@@ -284,6 +288,8 @@ function goToLocation(locationName,returnNum)
     var nameToSet = ''; // titlebar name
     var nonCombat = true; // how to configure the sidenav and etc
 
+    console.log("goToLocation " + locationName + ".returnNum " + returnNum);
+
     switch(locationName)
     {
         case 'town':
@@ -308,6 +314,7 @@ function goToLocation(locationName,returnNum)
     setMostSideNavToHidden();
     if(nonCombat)
     {
+        console.log("goToLocation " + locationName + ".nonCombat " + nonCombat);
         setCombatSideNavToHidden();
 
         // show sell button in inventory
@@ -319,11 +326,13 @@ function goToLocation(locationName,returnNum)
                 elements.item(i).hidden = false;
             }
         }
+        setHealth(playerData.maxhealth);
         setMostSideNavToVisible();
         loadCharacterSheet();
     }
     else
     {
+        console.log("goToLocation " + locationName + ".nonCombat " + nonCombat);
         setCombatSideNavToVisible();
 
         // hide sell button in inventory
@@ -339,18 +348,27 @@ function goToLocation(locationName,returnNum)
         // new combat
         if(returnNum != 1)
         {
+            console.log("goToLocation " + locationName + ".newCombat " + true);
             // select enemies
-            var numberOfEnemies = Math.floor(Math.random() * 6) + 3 // 8 is max number of enemies (+3 to set minimum to 3)
+            var numberOfEnemies = randomIntFromInterval(3, 5)
+            console.log("goToLocation " + locationName + ".numberOfEnemies " + numberOfEnemies);
             gameData.enemiesRemaining = numberOfEnemies;
-        }
-        newEnemy(locationName);
 
+            newEnemy(locationName);
+        }
+
+        document.getElementById(centerPage.titleName).innerHTML = nameToSet;
         document.getElementById(centerPage.sidenavCharacterName).hidden = false;
         document.getElementById(centerPage.sidenavInventoryName).hidden = false;
         document.getElementById(centerPage.sidenavCreditsName).hidden = false;
 
         document.getElementById(centerPage.combatPageName).hidden = false;
     }
+}
+
+function randomIntFromInterval(min, max) 
+{
+    return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 
@@ -363,18 +381,19 @@ function newEnemy(locationName)
     var enemyImg = "assets/enemyImpSprite.svg"
     var enemyArmor = 0;
     var enemyDamageEst = "0-0";
-    if(gameData.enemiesRemaining != 0)
+    console.log("newEnemy " + locationName + ".gameData.enemiesRemaining " + gameData.enemiesRemaining);
+    if(gameData.enemiesRemaining >= 0)
     {
         if(locationName == "dungeon1")
         {
+            console.log("newEnemy " + locationName + ".dungeon1 " + true);
             var keys = Object.keys(gameData.mtnEnemies);
-            console.log(keys);
             enemyName = keys[Math.floor(keys.length * Math.random())];
-            console.log(enemyName);
             enemyHealth = gameData.mtnEnemies[enemyName];
-            console.log(enemyHealth);
             enemyImg = "assets/enemy" + enemyName + "Sprite.svg"
             enemyDamageEst = "5-15";
+            gameData.currentEnemyType = 0;
+            console.log("newEnemy " + locationName + ".enemyHealth " + enemyHealth);
         }
         if(locationName == "dungeon2")
         {
@@ -383,17 +402,22 @@ function newEnemy(locationName)
             enemyHealth = gameData.platEnemies[enemyName];
             enemyImg = "assets/enemy" + enemyName + "Sprite.svg"
             enemyDamageEst = "15-25";
+            gameData.currentEnemyType = 0;
         }
     }
     else // boss
     {
         if(locationName == "dungeon1")
         {
+            console.log("newEnemy " + locationName + ".enemyBoss " + true);
             enemyName = "Bandit Summoner";
             enemyHealth = gameData.mtnBoss["BanditSummoner"];
             enemyImg = "assets/enemyBanditSummonerSprite.svg"
             enemyArmor = 2;
             enemyDamageEst = "10-25";
+            gameData.bossFirstTurn = true;
+            gameData.currentEnemyType = 1;
+            console.log("newEnemy " + locationName + ".enemyHealth " + enemyHealth);
         }
         if(locationName == "dungeon2")
         {
@@ -402,9 +426,10 @@ function newEnemy(locationName)
             enemyImg = "assets/enemyChiefRaiderSprite.svg"
             enemyArmor = 4;
             enemyDamageEst = "20-35";
+            gameData.bossFirstTurn = true;
+            gameData.currentEnemyType = 1;
         }
     }
-
     // edit view : enemyName
     var elements = document.getElementsByClassName('enemyName');
     for(var i = 0; i < elements.length; i++)
@@ -412,38 +437,274 @@ function newEnemy(locationName)
         elements.item(i).innerHTML = enemyName;
     }
 
+    console.log("newEnemy " + locationName + ".enemyHealthloop " + enemyHealth);
     // edit view : enemyHealth
-    var elements = document.getElementsByClassName('enemyHealth');
-    for(var i = 0; i < elements.length; i++)
+    var hpElements = document.getElementsByClassName('enemyHealth');
+    for(var i = 0; i < hpElements.length; i++)
     {
-        elements.item(i).innerHTML = enemyHealth;
+        console.log("newEnemy " + locationName + ".hpElements " + hpElements);
+        console.log(hpElements);
+        //hpElements.item(i).innerHTML = enemyHealth;
+        console.log(hpElements);
+        gameData.currentEnemyHealth = enemyHealth;
     }
 
     // edit view : enemyImg
     document.getElementById('combatPageImg').src = enemyImg;
     // edit view : enemyArmor
     document.getElementById('enemyArmor').innerHTML = enemyArmor;
+    gameData.currentEnemyArmor = enemyArmor;
     // edit view : enemyDamageEst
     document.getElementById('enemyDamageEst').innerHTML = enemyDamageEst;
+    gameData.currentEnemyDamage = enemyDamageEst;
 
 }
 
 // type: 0 = normal. 1 = bomb
 function combatAttack(type)
 {
+    var playerDamageToEnemy = randomIntFromInterval(8,15);
+    if(type == 1)
+    {
+        playerDamageToEnemy = 100;
+    }
+    else
+    {
+        var hasRend = (playerData.skills["rend"] >= 1) ? true : false;
+        var hasCalculated = (playerData.skills["calculated"] >= 1) ? true : false;
+        var hasTempered = (playerData.skills["tempered"] >= 1) ? true : false;
+        var hasWeighted = (playerData.skills["weighted"] >= 1) ? true : false;
+        var hasBlock = (playerData.skills["block"] >= 1) ? true : false;
+        var hasDisrespect = (playerData.skills["disrespect"] >= 1) ? true : false;
+        var calculatedActivated = false;
 
+        if(hasRend)
+        {
+            if(playerData.rendTurnsRemaining > 0)
+            {
+                playerData.rendTurnsRemaining -= 1;
+                playerDamageToEnemy += 1;
+                // REMOVE REND BUFF IMG?
+            }
+            else
+            {
+                var applyRendCheck = randomIntFromInterval(1,5);
+                if(applyRendCheck == 1)
+                {
+                    playerData.rendTurnsRemaining = 5;
+                    // ADD REND BUFF IMG?
+                }
+            }
+        }
+        if(hasCalculated)
+        {
+            var applyCalculatedCheck = randomIntFromInterval(1,20);
+            if(applyCalculatedCheck == 1)
+            {
+                calculatedActivated = true;
+            }
+        }
+        if(hasWeighted && (gameData.currentEnemyArmor > 0))
+        {
+            if(gameData.currentEnemyArmor == 1)
+            {
+                playerDamageToEnemy += 1;
+            }
+            else // weighted penetrates 2 armor. so max is 2
+            {
+                playerDamageToEnemy += 2;
+            }
+        }
+        playerDamageToEnemy += playerData.weaponBonus;
+    }
+    
+    var enemyHealth = gameData.currentEnemyHealth;
+    console.log("combatAttack.enemyHealthbefore " + enemyHealth);
+    enemyHealth -= playerDamageToEnemy;
+    gameData.currentEnemyHealth = enemyHealth;
+    console.log("combatAttack.enemyHealthafter " + enemyHealth);
+    
+    if(hasTempered && gameData.bossFirstTurn)
+    {
+        setHealth(playerData.health + Math.ceil(playerData.maxhealth * .5)); // setHealth() checks for overheal already
+        gameData.bossFirstTurn = false;
+    }
+
+    var gearDropSuccess = 0;
+    if(enemyHealth <= 0)
+    {
+        addToKills();
+        gameData.enemiesRemaining -= 1;
+        setGold(playerData.gold + randomIntFromInterval(10,20));
+        gearDropSuccess = randomIntFromInterval(1,100);
+        {
+            switch(gearDropSuccess)
+            {
+                case 1:
+                    addToInventory("kingsBarding",1,0);
+                    break;
+
+                case 2:
+                    addToInventory("kingsPlateMetal",1,0);
+                    break;
+
+                case 3:
+                    addToInventory("kingsHilt",1,0);
+                    break;
+
+                case 4:
+                    addToInventory("kingsBlade",1,0);
+                    break;
+                case 5:
+                    addToInventory("bomb",1,0);
+                    break;
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 10:
+                case 11:
+                case 12:
+                    addToInventory("healthPotion",1,0);
+                    break;
+            }
+        }
+        newEnemy(gameData.currentLocation);
+    }
+    if(enemyHealth <= 0 && gameData.currentEnemyType == 1)
+    {
+        addToKills();
+        setGold(playerData.gold + randomIntFromInterval(35,50));
+        gearDropSuccess = randomIntFromInterval(1,50);
+        {
+            switch(gearDropSuccess)
+            {
+                case 1:
+                    addToInventory("kingsBarding",1,0);
+                    break;
+
+                case 2:
+                    addToInventory("kingsPlateMetal",1,0);
+                    break;
+
+                case 3:
+                    addToInventory("kingsHilt",1,0);
+                    break;
+
+                case 4:
+                    addToInventory("kingsBlade",1,0);
+                    break;
+                case 5:
+                    addToInventory("bomb",1,0);
+                    break;
+                case 5:
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                case 10:
+                    addToInventory("healthPotion",1,0);
+                    break;
+            }
+        }
+        goToLocation('town');
+    }
+    else
+    {
+        var elements = document.getElementsByClassName('enemyHealth');
+        for(var i = 0; i < elements.length; i++)
+        {
+            elements.item(i).innerHTML = enemyHealth;
+            gameData.currentEnemyHealth = enemyHealth;
+            
+        }
+
+        var reduceDamagePercent = 1.0;
+        if(hasBlock)
+        {
+            var blockSuccess = Math.floor(10 * Math.random());
+            if(blockSuccess == 0)
+            {
+                reduceDamagePercent = .5;
+            }
+        }
+        if(hasDisrespect)
+        {
+            var disrespectSuccess = Math.floor(20 * Math.random());
+            if(disrespectSuccess == 1)
+            {
+                setHealth(playerData.health + Math.ceil(playerData.maxhealth * .05));
+            }
+        }
+        const regexDamage = /^(?<lowerLimit>\d+)-(?<upperLimit>\d+)$/;
+        var regexMatch = (gameData.currentEnemyDamage).match(regexDamage);
+        var enemyDamageDealt = randomIntFromInterval(parseInt(regexMatch.groups.lowerLimit),parseInt(regexMatch.groups.upperLimit));
+        
+        enemyDamageDealt = Math.ceil(enemyDamageDealt * reduceDamagePercent); // damage % reduction
+        enemyDamageDealt -= playerData.armorReduction; // flat armor reduction
+        if(enemyDamageDealt <= 0)
+        {
+            enemyDamageDealt = 1;
+        }
+        setHealth(playerData.health - enemyDamageDealt);
+        if(playerData.health == 0)
+        {
+            setGold( Math.ceil(playerData.gold / 2) );
+            goToLocation('town');
+        }
+    }
 }
 
 // reduce damage from enemy by 50% for this turn.
 function combatDefend()
 {
-    
+    var reduceDamagePercent = .50;
+    if(playerData.rendTurnsRemaining > 0)
+    {
+        playerData.rendTurnsRemaining -= 1;
+    }
+    if(playerData.skills["block"] >= 1)
+    {
+        var blockSuccess = Math.floor(10 * Math.random());
+        if(blockSuccess == 0)
+        {
+            reduceDamagePercent = .25;
+        }
+    }
+    if(playerData.skills['disrespect'] >= 1)
+    {
+        var disrespectSuccess = Math.floor(20 * Math.random());
+        if(disrespectSuccess == 0)
+        {
+            setHealth(playerData.health + Math.ceil(playerData.maxhealth * .05));
+        }
+    }
+    const regexDamage = /^(?<lowerLimit>\d+)-(?<upperLimit>\d+)$/;
+    var regexMatch = (gameData.currentEnemyDamage).match(regexDamage);
+    var enemyDamageDealt = randomIntFromInterval(parseInt(regexMatch.groups.lowerLimit),parseInt(regexMatch.groups.upperLimit));
+
+    enemyDamageDealt = Math.ceil(enemyDamageDealt * reduceDamagePercent); // damage % reduction
+    enemyDamageDealt -= playerData.armorReduction; // flat armor reduction
+    if(enemyDamageDealt <= 0)
+    {
+        enemyDamageDealt = 1;
+    }
+    setHealth(playerData.health - enemyDamageDealt);
+    if(playerData.health == 0)
+    {
+        setGold( Math.ceil(playerData.gold / 2) );
+        goToLocation('town');
+    }
 }
 
-// player loses half their gold
+// 25% chance player loses half their gold
 function combatEscape()
 {
-    setGold( Math.ceil(playerData.gold / 2) );
+    var goldLoss = Math.floor(4 * Math.random());
+    if(goldLoss == 0)
+    {
+        setGold( Math.ceil(playerData.gold / 2) );
+    }
     goToLocation('town',0)
 }
 
@@ -1110,33 +1371,6 @@ function setLocation(location)
     gameData.currentLocation = location;
 }
 
-// set town stage, or the level fo the town
-// 0 = decrepit, falling apart, missing buildings and people. Seer is present for beginning story. Dungeon 1 unlocked
-// 1 = carpenter comes, builds his store/house. can be used for thematically building others' stores/houses. Also unlocks dungeon 2
-// 2 = blacksmith comes, can upgrade armor and weapons, Also unlocks dungeon 3
-// 3 = Arena Master comes, player can fight by betting money and winning.
-function setTownStage(stage) // not implemented
-{
-    // update view
-
-    // update data
-    gameData.townStage = stage;
-}
-
-// set Dungeon stage
-// 1 = dungeon 1 unlocked
-// 2 = dungeon 2 unlocked
-// 3 = dungeon 3 unlocked
-function setDungeonStage(stage)
-{
-    // update view
-
-    // update data
-    gameData.dungeonStage = stage;
-}
-
-
-
 // ------------------ INIT ---------------------
 // start menu start button pressed
 // if the user doesnt follow the 1 requirement of no commas we give them the name IdiotWithNoName (also if they dont type anything)
@@ -1192,12 +1426,6 @@ function startButtonPressed()
     // --- GAME DATA ---
     // LOCATION
     setLocation("Roc Town");
-
-    // TOWN STAGE (LEVEL)
-    setTownStage(0);
-
-    // DUNGEON STAGE (UNLOCKS)
-    setDungeonStage(0);
 
     // Expose sidenav options
     setMostSideNavToVisible();
