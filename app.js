@@ -66,17 +66,17 @@ const gameData = {
         Imp:25,
         Gobbo:30,
         Wurm:45,
-        Snek:10,
-        Trap:10,
+        Snek:20,
+        Trap:15,
         Bandit:50
     },
     mtnBoss:{
         BanditSummoner:150
     },
     platEnemies:{
-        Gobbo:30,
-        Wurm:45,
-        Trap:1,
+        Gobbo:40,
+        Wurm:55,
+        Trap:25,
         Boar:60,
         Buffalo:75,
         Raider:90,
@@ -84,8 +84,7 @@ const gameData = {
     },
     platBoss:{
         ChiefRaider:250
-    },
-    bossFirstTurn:false
+    }
 };
 
 /* center page obj constuctor */
@@ -129,7 +128,7 @@ function sidenavRowClick(rowNum)
 {
     switch(rowNum)
     {
-        case 0: // Character
+        case 0: // map
             loadMapSheet();
             break;
 
@@ -161,7 +160,7 @@ function sidenavRowClick(rowNum)
             loadCreditsSheet();
             break;
 
-        case -1: // Credits
+        case -1: // combat
             goToLocation(gameData.currentLocation,1);
             break;
     }
@@ -365,6 +364,16 @@ function randomIntFromInterval(min, max)
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+function clearCombatLog()
+{
+    document.getElementById('damageCalcCombatInfo').innerHTML = "";
+    document.getElementById('damageTakenCalcCombatInfo').innerHTML = "";
+    document.getElementById('rendCombatInfo').innerHTML = "";
+    document.getElementById('calculatedCombatInfo').innerHTML = "";
+    document.getElementById('blockCombatInfo').innerHTML = "";
+    document.getElementById('disrespectCombatInfo').innerHTML = "";
+}
+
 
 // ----------------- SETTERS --------------------
 
@@ -375,6 +384,7 @@ function newEnemy(locationName)
     var enemyImg = "assets/enemyImpSprite.svg"
     var enemyArmor = 0;
     var enemyDamageEst = "0-0";
+    clearCombatLog();
     if(gameData.enemiesRemaining >= 0)
     {
         if(locationName == "dungeon1")
@@ -405,7 +415,6 @@ function newEnemy(locationName)
             enemyImg = "assets/enemyBanditSummonerSprite.svg"
             enemyArmor = 2;
             enemyDamageEst = "10-25";
-            gameData.bossFirstTurn = true;
             gameData.currentEnemyType = 1;
         }
         if(locationName == "dungeon2")
@@ -415,8 +424,12 @@ function newEnemy(locationName)
             enemyImg = "assets/enemyChiefRaiderSprite.svg"
             enemyArmor = 4;
             enemyDamageEst = "20-35";
-            gameData.bossFirstTurn = true;
             gameData.currentEnemyType = 1;
+        }
+        var hasTempered = (playerData.skills["tempered"] >= 1) ? true : false;
+        if(hasTempered)
+        {
+            setHealth(playerData.health + Math.ceil(playerData.maxhealth * .5)); // setHealth() checks for overheal already
         }
     }
     // edit view : enemyName
@@ -449,6 +462,8 @@ function newEnemy(locationName)
 function combatAttack(type)
 {
     var playerDamageToEnemy = randomIntFromInterval(8,15);
+    clearCombatLog();
+
     if(type == 1)
     {
         playerDamageToEnemy = 100;
@@ -468,8 +483,8 @@ function combatAttack(type)
             if(playerData.rendTurnsRemaining > 0)
             {
                 playerData.rendTurnsRemaining -= 1;
-                playerDamageToEnemy += 1;
-                // REMOVE REND BUFF IMG?
+                playerDamageToEnemy += 3;
+                document.getElementById('rendCombatInfo').innerHTML = "You're in a frenzy, you are Rending your enemy for " + playerData.rendTurnsRemaining + " more turns!";
             }
             else
             {
@@ -477,7 +492,7 @@ function combatAttack(type)
                 if(applyRendCheck == 1)
                 {
                     playerData.rendTurnsRemaining = 5;
-                    // ADD REND BUFF IMG?
+                    document.getElementById('rendCombatInfo').innerHTML = "You're in a frenzy, you are Rending your enemy for " + playerData.rendTurnsRemaining + " more turns!";
                 }
             }
         }
@@ -487,6 +502,7 @@ function combatAttack(type)
             if(applyCalculatedCheck == 1)
             {
                 calculatedActivated = true;
+                document.getElementById('calculatedCombatInfo').innerHTML = "Your giga-brain lets you attack twice!";
             }
         }
         if(hasWeighted && (gameData.currentEnemyArmor > 0))
@@ -501,17 +517,15 @@ function combatAttack(type)
             }
         }
         playerDamageToEnemy += playerData.weaponBonus;
+        if(calculatedActivated)
+        {
+            playerDamageToEnemy *= 2;
+        }
     }
-    
+    document.getElementById('damageCalcCombatInfo').innerHTML = "You deal " + playerDamageToEnemy + " damage!";
     var enemyHealth = gameData.currentEnemyHealth;
     enemyHealth -= playerDamageToEnemy;
     gameData.currentEnemyHealth = enemyHealth;
-    
-    if(hasTempered && gameData.bossFirstTurn)
-    {
-        setHealth(playerData.health + Math.ceil(playerData.maxhealth * .5)); // setHealth() checks for overheal already
-        gameData.bossFirstTurn = false;
-    }
 
     var gearDropSuccess = 0;
     if(enemyHealth <= 0)
@@ -601,18 +615,20 @@ function combatAttack(type)
         var reduceDamagePercent = 1.0;
         if(hasBlock)
         {
-            var blockSuccess = Math.floor(10 * Math.random());
-            if(blockSuccess == 0)
+            var blockSuccess = randomIntFromInterval(1,10);
+            if(blockSuccess == 1)
             {
                 reduceDamagePercent = .5;
+                document.getElementById('blockCombatInfo').innerHTML = "You block half the damage from the enemy!";
             }
         }
         if(hasDisrespect)
         {
-            var disrespectSuccess = Math.floor(20 * Math.random());
+            var disrespectSuccess = randomIntFromInterval(1,20);
             if(disrespectSuccess == 1)
             {
                 setHealth(playerData.health + Math.ceil(playerData.maxhealth * .05));
+                document.getElementById('disrespectCombatInfo').innerHTML = "You Disrespect your foe and just heal for some of your max health.";
             }
         }
         const regexDamage = /^(?<lowerLimit>\d+)-(?<upperLimit>\d+)$/;
@@ -625,6 +641,7 @@ function combatAttack(type)
         {
             enemyDamageDealt = 1;
         }
+        document.getElementById('damageTakenCalcCombatInfo').innerHTML = "You took " + enemyDamageDealt + " damage!";
         setHealth(playerData.health - enemyDamageDealt);
         if(playerData.health == 0)
         {
@@ -637,25 +654,30 @@ function combatAttack(type)
 // reduce damage from enemy by 50% for this turn.
 function combatDefend()
 {
+    clearCombatLog();
+
     var reduceDamagePercent = .50;
     if(playerData.rendTurnsRemaining > 0)
     {
         playerData.rendTurnsRemaining -= 1;
+        document.getElementById('rendCombatInfo').innerHTML = "You're in a frenzy, try attacking next time. Rending for " + playerData.rendTurnsRemaining + " more turns!";
     }
     if(playerData.skills["block"] >= 1)
     {
-        var blockSuccess = Math.floor(10 * Math.random());
-        if(blockSuccess == 0)
+        var blockSuccess = randomIntFromInterval(1,10);
+        if(blockSuccess == 1)
         {
             reduceDamagePercent = .25;
+            document.getElementById('blockCombatInfo').innerHTML = "You block 75% of the damage from the enemy!";
         }
     }
     if(playerData.skills['disrespect'] >= 1)
     {
-        var disrespectSuccess = Math.floor(20 * Math.random());
-        if(disrespectSuccess == 0)
+        var disrespectSuccess = randomIntFromInterval(1,20);;
+        if(disrespectSuccess == 1)
         {
             setHealth(playerData.health + Math.ceil(playerData.maxhealth * .05));
+            document.getElementById('disrespectCombatInfo').innerHTML = "You Disrespect your foe and just heal for some of your max health.";
         }
     }
     const regexDamage = /^(?<lowerLimit>\d+)-(?<upperLimit>\d+)$/;
@@ -676,11 +698,11 @@ function combatDefend()
     }
 }
 
-// 25% chance player loses half their gold
+// 20% chance player loses half their gold
 function combatEscape()
 {
-    var goldLoss = Math.floor(4 * Math.random());
-    if(goldLoss == 0)
+    var goldLoss = randomIntFromInterval(1,5);
+    if(goldLoss == 1)
     {
         setGold( Math.ceil(playerData.gold / 2) );
     }
@@ -941,18 +963,18 @@ function setArmor(armor)
             break;
         
         case 'Breast Plate':
-            armorStat = 3;
-            playerData.armorReduction = 3;
-            break;
-
-        case 'Full Plate':
             armorStat = 4;
             playerData.armorReduction = 4;
             break;
 
+        case 'Full Plate':
+            armorStat = 6;
+            playerData.armorReduction = 6;
+            break;
+
         case "King's Plate":
-            armorStat = 5;
-            playerData.armorReduction = 5;
+            armorStat = 8;
+            playerData.armorReduction = 8;
             break; 
     }
     if(playerData.skills['training'] == 1 && (!playerData.trainingApplied || originalArmor != playerData.armor) )
@@ -1389,7 +1411,7 @@ function startButtonPressed()
     addToInventory("healthPotion",2,0);
 
     // EXPERIENCE
-    addExperience(0);
+    addExperience(300);
 
     // LEVEL
     //addLevel();

@@ -26,6 +26,7 @@
             <li class="list">Terrible Game Design</li>
             <li class="list">Terrible Art</li>
             <li class="list">Terrible UI</li>
+            <li class="list">No saving/loading</li>
         </ul>
         <p>
             Now that we have all the great things out of the way, we can get started.
@@ -41,11 +42,13 @@
             <b>Help:</b>
         </p>
         <ul class="spoiler">
-            <li>Start with Mtn. Dungeon</li>
+            <li>Start with Mtn. Dungeon (lvl 1-5ish)</li>
             <li>Every dungeon has a random number of enemies between 3-5, plus 1 boss at the end.</li>
             <li>You gain xp and gold immediately after each kill</li>
+            <li>Remember to upgrade your gear in the store.</li>
             <li>There is a Tier 5 sword and armor, but can only be obtained through drops from mobs.</li>
-            <li>Dying makes you lose 50% of your gold. Escaping is only a 25% chance to lose half your gold, choose your fights wisely.</li>
+            <li>You full heal upon leveling up, even mid-dungeon.</li>
+            <li>Dying makes you lose 50% of your gold. Escaping is only a 20% chance to lose half your gold, choose when to fight, wisely.</li>
         </ul>
     </div>
     <div id="mapPage" hidden>
@@ -115,10 +118,16 @@
             <tr id="combatPageRowPadding"></tr><tr id="combatPageRowPadding"></tr><tr id="combatPageRowPadding"></tr><tr id="combatPageRowPadding"></tr>
             <tr id="combatPageRow4">
                 <td>
-                    <button onclick="combatEscape();" class="combatButton" type="button">Escape</button> 25% chance to lose half your gold!
+                    <button onclick="combatEscape();" class="combatButton" type="button">Escape</button> 20% chance to lose half your gold!
                 </td>
             </tr>
         </table>
+        <p class="combatInfoWords" id="damageCalcCombatInfo"></p>
+        <p class="combatDamageInfoWords" id="damageTakenCalcCombatInfo"></p>
+        <p class="combatInfoWords" id="rendCombatInfo"></p>
+        <p class="combatInfoWords"id="disrespectCombatInfo"></p>
+        <p class="combatInfoWords"id="calculatedCombatInfo"></p>
+        <p class="combatInfoWords"id="blockCombatInfo"></p>
     </div>
 
 
@@ -147,7 +156,7 @@
                         <div class="tooltip">
                             Armor
                             <span class="tooltipText">
-                                Each tier, above 0, reduces damage taken by 1.
+                                Each tier, above 0, reduces damage taken.
                             </span>
                         </div>
                         <br>
@@ -267,7 +276,7 @@
                             <div class="tooltip">
                                 King's Hilt
                                 <span class="tooltipText">
-                                    1 of 2 parts of a great sword. <br>Needs a Blade.<br>Can only be made in town.
+                                    1 of 2 parts of a great sword. <br>Needs a Blade.<br>Can only be made in town.<br>Sells for 250gp.
                                 </span>
                             </div>
                         </p>
@@ -294,7 +303,7 @@
                             <div class="tooltip">
                                 King's Blade
                                 <span class="tooltipText">
-                                    1 of 2 parts of a great sword. <br>Needs a Hilt.<br>Can only be made in town.
+                                    1 of 2 parts of a great sword. <br>Needs a Hilt.<br>Can only be made in town.<br>Sells for 250gp.
                                 </span>
                             </div>
                         </p>
@@ -321,7 +330,7 @@
                             <div class="tooltip">
                                 King's Barding
                                 <span class="tooltipText">
-                                    1 of 2 parts of an excellent armor. <br>Needs some Plate Metal.<br>Can only be made in town.
+                                    1 of 2 parts of an excellent armor. <br>Needs some Plate Metal.<br>Can only be made in town.<br>Sells for 250gp.
                                 </span>
                             </div>
                         </p>
@@ -348,7 +357,7 @@
                             <div class="tooltip">
                                 King's Plate Metal
                                 <span class="tooltipText">
-                                    1 of 2 parts of an excellent armor. <br>Needs some Barding.<br>Can only be made in town.
+                                    1 of 2 parts of an excellent armor. <br>Needs some Barding.<br>Can only be made in town.<br>Sells for 250gp.
                                 </span>
                             </div>
                         </p>
@@ -391,7 +400,7 @@
                                 <span class="tooltipText">
                                     <div class="tooltipTitle">Passive</div>
                                     Rend grants your attacks a 
-                                    <div class="skillchangeText">20%</div> chance to give you a +1 damage bonus for 5 turns. <br><b>(Does not refresh or stack)</b>
+                                    <div class="skillchangeText">20%</div> chance to give you a +3 damage buff for 5 turns. <br><b>(Does not refresh or stack)</b>
                                 </span>
                             </div>
                         </p>
@@ -733,7 +742,7 @@
                             <div class="tooltip">
                                 Breast Plate
                                 <span class="tooltipText">
-                                    Tier 3. Armor +3
+                                    Tier 3. Armor +4
                                 </span>
                             </div>
                         </p>
@@ -759,7 +768,7 @@
                             <div class="tooltip">
                                 Full Plate
                                 <span class="tooltipText">
-                                    Tier 4. Armor +4
+                                    Tier 4. Armor +6
                                 </span>
                             </div>
                         </p>
