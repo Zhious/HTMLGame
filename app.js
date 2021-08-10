@@ -57,7 +57,31 @@ const gameData = {
     leatherArmorCost:200,
     breastPlateCost:300,
     fullPlateCost:400,
-    haggleApplied:false
+    haggleApplied:false,
+    enemiesRemaining:0,
+    mtnEnemies:{
+        Imp:25,
+        Gobbo:30,
+        Wurm:45,
+        Snek:10,
+        Trap:1,
+        Bandit:50
+    },
+    mtnBoss:{
+        BanditSummoner:150
+    },
+    platEnemies:{
+        Gobbo:30,
+        Wurm:45,
+        Trap:1,
+        Boar:60,
+        Buffalo:75,
+        Raider:90,
+        Highwayman:80
+    },
+    platBoss:{
+        ChiefRaider:250
+    }
 };
 
 /* center page obj constuctor */
@@ -312,6 +336,15 @@ function goToLocation(locationName,returnNum)
             }
         }
 
+        // new combat
+        if(returnNum != 1)
+        {
+            // select enemies
+            var numberOfEnemies = Math.floor(Math.random() * 6) + 3 // 8 is max number of enemies (+3 to set minimum to 3)
+            gameData.enemiesRemaining = numberOfEnemies;
+        }
+        newEnemy(locationName);
+
         document.getElementById(centerPage.sidenavCharacterName).hidden = false;
         document.getElementById(centerPage.sidenavInventoryName).hidden = false;
         document.getElementById(centerPage.sidenavCreditsName).hidden = false;
@@ -322,6 +355,78 @@ function goToLocation(locationName,returnNum)
 
 
 // ----------------- SETTERS --------------------
+
+function newEnemy(locationName)
+{
+    var enemyName = "Imp";
+    var enemyHealth = 0;
+    var enemyImg = "assets/enemyImpSprite.svg"
+    var enemyArmor = 0;
+    var enemyDamageEst = "0-0";
+    if(gameData.enemiesRemaining != 0)
+    {
+        if(locationName == "dungeon1")
+        {
+            var keys = Object.keys(gameData.mtnEnemies);
+            console.log(keys);
+            enemyName = keys[Math.floor(keys.length * Math.random())];
+            console.log(enemyName);
+            enemyHealth = gameData.mtnEnemies[enemyName];
+            console.log(enemyHealth);
+            enemyImg = "assets/enemy" + enemyName + "Sprite.svg"
+            enemyDamageEst = "5-15";
+        }
+        if(locationName == "dungeon2")
+        {
+            var keys = Object.keys(gameData.platEnemies);
+            enemyName = keys[Math.floor(keys.length * Math.random())];
+            enemyHealth = gameData.platEnemies[enemyName];
+            enemyImg = "assets/enemy" + enemyName + "Sprite.svg"
+            enemyDamageEst = "15-25";
+        }
+    }
+    else // boss
+    {
+        if(locationName == "dungeon1")
+        {
+            enemyName = "Bandit Summoner";
+            enemyHealth = gameData.mtnBoss["BanditSummoner"];
+            enemyImg = "assets/enemyBanditSummonerSprite.svg"
+            enemyArmor = 2;
+            enemyDamageEst = "10-25";
+        }
+        if(locationName == "dungeon2")
+        {
+            enemyName = "Chief Raider"
+            enemyHealth = gameData.platBoss["ChiefRaider"];
+            enemyImg = "assets/enemyChiefRaiderSprite.svg"
+            enemyArmor = 4;
+            enemyDamageEst = "20-35";
+        }
+    }
+
+    // edit view : enemyName
+    var elements = document.getElementsByClassName('enemyName');
+    for(var i = 0; i < elements.length; i++)
+    {
+        elements.item(i).innerHTML = enemyName;
+    }
+
+    // edit view : enemyHealth
+    var elements = document.getElementsByClassName('enemyHealth');
+    for(var i = 0; i < elements.length; i++)
+    {
+        elements.item(i).innerHTML = enemyHealth;
+    }
+
+    // edit view : enemyImg
+    document.getElementById('combatPageImg').src = enemyImg;
+    // edit view : enemyArmor
+    document.getElementById('enemyArmor').innerHTML = enemyArmor;
+    // edit view : enemyDamageEst
+    document.getElementById('enemyDamageEst').innerHTML = enemyDamageEst;
+
+}
 
 // type: 0 = normal. 1 = bomb
 function combatAttack(type)
@@ -412,8 +517,6 @@ function setGold(newGold)
 // hide lower and higher tier items that arent for purchase
 function updateStorePage()
 {
-    healthPotionItemCost
-
     // set a 25% reduction in prices if haggle
     if(playerData.skills["haggle"] == 1 && !gameData.haggleApplied)
     {
@@ -761,11 +864,27 @@ function updateInventoryView()
     {        
         if(playerData.inventory[inventoryItem] >= 1)
         {
+            if(inventoryItem == 'healthPotion')
+            {
+                document.getElementById("combatHealthPotionButton").hidden = false;
+            }
+            if(inventoryItem == 'bomb')
+            {
+                document.getElementById("combatBombButton").hidden = false;
+            }
             document.getElementById(inventoryItem + "Amount").innerHTML = playerData.inventory[inventoryItem];
             document.getElementById(inventoryItem + "Item").hidden = false;
         }
         else
         {
+            if(inventoryItem == 'healthPotion')
+            {
+                document.getElementById("combatHealthPotionButton").hidden = true;
+            }
+            if(inventoryItem == 'bomb')
+            {
+                document.getElementById("combatBombButton").hidden = true;
+            }
             document.getElementById(inventoryItem + "Amount").innerHTML = 0;
             document.getElementById(inventoryItem + "Item").hidden = true;
         }

@@ -87,8 +87,8 @@
                     <td class='combatPageRowInfoValue' id="combatPrimaryAttributeBox">
                         <div class='enemyName'></div><div class="combatPageRowInfoValuePadding"></div>
                         <div class="enemyHealth"></div><div class="combatPageRowInfoValuePadding"></div>
-                        <div class="characterMaxHealth"></div><div class="combatPageRowInfoValuePadding"></div>
-                        <div class="characterMaxHealth"></div>
+                        <div id="enemyArmor"></div><div class="combatPageRowInfoValuePadding"></div>
+                        <div id="enemyDamageEst"></div>
                     </td>
                 </tr>
             </tbody>
@@ -103,8 +103,8 @@
             <tr id="combatPageRowPadding"></tr><tr id="combatPageRowPadding"></tr>
             <tr id="combatPageRow3">
                 <td>
-                    <button onclick="removeFromInventory('healthPotion','use');" class="combatButton" type="button">Use Health Potion</button>
-                    <button onclick="removeFromInventory('bomb','use');" class="combatButton" type="button">Use Bomb</button>
+                    <button onclick="removeFromInventory('healthPotion','use');" class="combatButton" id="combatHealthPotionButton" type="button">Use Health Potion</button>
+                    <button onclick="removeFromInventory('bomb','use');" class="combatButton" id="combatBombButton" type="button">Use Bomb</button>
                 </td>
             </tr>
             <tr id="combatPageRowPadding"></tr><tr id="combatPageRowPadding"></tr><tr id="combatPageRowPadding"></tr><tr id="combatPageRowPadding"></tr>
