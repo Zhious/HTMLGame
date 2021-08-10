@@ -1411,7 +1411,7 @@ function startButtonPressed()
     addToInventory("healthPotion",2,0);
 
     // EXPERIENCE
-    addExperience(1500);
+    addExperience(0);
 
     // LEVEL
     //addLevel();
