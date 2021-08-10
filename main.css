@@ -723,3 +723,16 @@ li
     box-shadow: 0 1px var(--lightgrey);
     transform: translateY(4px);
 }
+
+/* ---------------------------------------------- */
+/* spoiler text */
+.spoiler
+{ 
+    color: var(--lightgrey); 
+    background-color: var(--lightgrey);
+}
+  
+.spoiler:hover 
+{ 
+    background-color: var(--darkgrey); 
+}

@@ -67,7 +67,7 @@ const gameData = {
         Gobbo:30,
         Wurm:45,
         Snek:10,
-        Trap:1,
+        Trap:10,
         Bandit:50
     },
     mtnBoss:{
@@ -288,8 +288,6 @@ function goToLocation(locationName,returnNum)
     var nameToSet = ''; // titlebar name
     var nonCombat = true; // how to configure the sidenav and etc
 
-    console.log("goToLocation " + locationName + ".returnNum " + returnNum);
-
     switch(locationName)
     {
         case 'town':
@@ -314,7 +312,6 @@ function goToLocation(locationName,returnNum)
     setMostSideNavToHidden();
     if(nonCombat)
     {
-        console.log("goToLocation " + locationName + ".nonCombat " + nonCombat);
         setCombatSideNavToHidden();
 
         // show sell button in inventory
@@ -332,7 +329,6 @@ function goToLocation(locationName,returnNum)
     }
     else
     {
-        console.log("goToLocation " + locationName + ".nonCombat " + nonCombat);
         setCombatSideNavToVisible();
 
         // hide sell button in inventory
@@ -348,10 +344,8 @@ function goToLocation(locationName,returnNum)
         // new combat
         if(returnNum != 1)
         {
-            console.log("goToLocation " + locationName + ".newCombat " + true);
             // select enemies
             var numberOfEnemies = randomIntFromInterval(3, 5)
-            console.log("goToLocation " + locationName + ".numberOfEnemies " + numberOfEnemies);
             gameData.enemiesRemaining = numberOfEnemies;
 
             newEnemy(locationName);
@@ -381,19 +375,16 @@ function newEnemy(locationName)
     var enemyImg = "assets/enemyImpSprite.svg"
     var enemyArmor = 0;
     var enemyDamageEst = "0-0";
-    console.log("newEnemy " + locationName + ".gameData.enemiesRemaining " + gameData.enemiesRemaining);
     if(gameData.enemiesRemaining >= 0)
     {
         if(locationName == "dungeon1")
         {
-            console.log("newEnemy " + locationName + ".dungeon1 " + true);
             var keys = Object.keys(gameData.mtnEnemies);
             enemyName = keys[Math.floor(keys.length * Math.random())];
             enemyHealth = gameData.mtnEnemies[enemyName];
             enemyImg = "assets/enemy" + enemyName + "Sprite.svg"
             enemyDamageEst = "5-15";
             gameData.currentEnemyType = 0;
-            console.log("newEnemy " + locationName + ".enemyHealth " + enemyHealth);
         }
         if(locationName == "dungeon2")
         {
@@ -409,7 +400,6 @@ function newEnemy(locationName)
     {
         if(locationName == "dungeon1")
         {
-            console.log("newEnemy " + locationName + ".enemyBoss " + true);
             enemyName = "Bandit Summoner";
             enemyHealth = gameData.mtnBoss["BanditSummoner"];
             enemyImg = "assets/enemyBanditSummonerSprite.svg"
@@ -417,7 +407,6 @@ function newEnemy(locationName)
             enemyDamageEst = "10-25";
             gameData.bossFirstTurn = true;
             gameData.currentEnemyType = 1;
-            console.log("newEnemy " + locationName + ".enemyHealth " + enemyHealth);
         }
         if(locationName == "dungeon2")
         {
@@ -528,8 +517,46 @@ function combatAttack(type)
     if(enemyHealth <= 0)
     {
         addToKills();
+        addExperience(randomIntFromInterval(25,50));
         gameData.enemiesRemaining -= 1;
         setGold(playerData.gold + randomIntFromInterval(10,20));
+        gearDropSuccess = randomIntFromInterval(1,200);
+        {
+            switch(gearDropSuccess)
+            {
+                case 1:
+                    addToInventory("kingsBarding",1,0);
+                    break;
+
+                case 2:
+                    addToInventory("kingsPlateMetal",1,0);
+                    break;
+
+                case 3:
+                    addToInventory("kingsHilt",1,0);
+                    break;
+
+                case 4:
+                    addToInventory("kingsBlade",1,0);
+                    break;
+
+                case 5: case 6:
+                    addToInventory("bomb",1,0);
+                    break;
+
+                case 7: case 8: case 9: case 10: case 11:
+                case 12: case 13: case 14: case 15: case 16:
+                    addToInventory("healthPotion",1,0);
+                    break;
+            }
+        }
+        newEnemy(gameData.currentLocation);
+    }
+    else if(enemyHealth <= 0 && gameData.currentEnemyType == 1)
+    {
+        addToKills();
+        addExperience(randomIntFromInterval(50,100));
+        setGold(playerData.gold + randomIntFromInterval(35,50));
         gearDropSuccess = randomIntFromInterval(1,100);
         {
             switch(gearDropSuccess)
@@ -549,54 +576,12 @@ function combatAttack(type)
                 case 4:
                     addToInventory("kingsBlade",1,0);
                     break;
+
                 case 5:
                     addToInventory("bomb",1,0);
                     break;
-                case 6:
-                case 7:
-                case 8:
-                case 9:
-                case 10:
-                case 11:
-                case 12:
-                    addToInventory("healthPotion",1,0);
-                    break;
-            }
-        }
-        newEnemy(gameData.currentLocation);
-    }
-    else if(enemyHealth <= 0 && gameData.currentEnemyType == 1)
-    {
-        addToKills();
-        setGold(playerData.gold + randomIntFromInterval(35,50));
-        gearDropSuccess = randomIntFromInterval(1,50);
-        {
-            switch(gearDropSuccess)
-            {
-                case 1:
-                    addToInventory("kingsBarding",1,0);
-                    break;
 
-                case 2:
-                    addToInventory("kingsPlateMetal",1,0);
-                    break;
-
-                case 3:
-                    addToInventory("kingsHilt",1,0);
-                    break;
-
-                case 4:
-                    addToInventory("kingsBlade",1,0);
-                    break;
-                case 5:
-                    addToInventory("bomb",1,0);
-                    break;
-                case 5:
-                case 6:
-                case 7:
-                case 8:
-                case 9:
-                case 10:
+                case 6: case 7: case 8: case 9: case 10:
                     addToInventory("healthPotion",1,0);
                     break;
             }
@@ -1392,7 +1377,7 @@ function startButtonPressed()
     //setHealth(90);
 
     // GOLD
-    setGold(5000);
+    setGold(100);
 
     // WEAPON
     setWeapon("Rusty Sword");
@@ -1402,11 +1387,6 @@ function startButtonPressed()
 
     // INVENTORY
     addToInventory("healthPotion",2,0);
-    addToInventory("bomb",1,0);
-    addToInventory("kingsBarding",3,0);
-    addToInventory("kingsPlateMetal",3,0);
-    addToInventory("kingsHilt",1,0);
-    addToInventory("kingsBlade",2,0);
 
     // EXPERIENCE
     addExperience(0);
@@ -1426,8 +1406,6 @@ function startButtonPressed()
 
     // landing page after start
     loadMapSheet();
-
-    setHealth(40);
 
     updateInventoryView();
 }
