@@ -528,7 +528,7 @@ function combatAttack(type)
     gameData.currentEnemyHealth = enemyHealth;
 
     var gearDropSuccess = 0;
-    if(enemyHealth <= 0)
+    if(enemyHealth <= 0 && (!gameData.currentEnemyType == 1))
     {
         addToKills();
         addExperience(randomIntFromInterval(25,50));
@@ -1411,7 +1411,7 @@ function startButtonPressed()
     addToInventory("healthPotion",2,0);
 
     // EXPERIENCE
-    addExperience(300);
+    addExperience(1500);
 
     // LEVEL
     //addLevel();
