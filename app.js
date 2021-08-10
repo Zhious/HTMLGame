@@ -437,15 +437,11 @@ function newEnemy(locationName)
         elements.item(i).innerHTML = enemyName;
     }
 
-    console.log("newEnemy " + locationName + ".enemyHealthloop " + enemyHealth);
     // edit view : enemyHealth
     var hpElements = document.getElementsByClassName('enemyHealth');
     for(var i = 0; i < hpElements.length; i++)
     {
-        console.log("newEnemy " + locationName + ".hpElements " + hpElements);
-        console.log(hpElements);
-        //hpElements.item(i).innerHTML = enemyHealth;
-        console.log(hpElements);
+        hpElements.item(i).innerHTML = enemyHealth;
         gameData.currentEnemyHealth = enemyHealth;
     }
 
@@ -519,10 +515,8 @@ function combatAttack(type)
     }
     
     var enemyHealth = gameData.currentEnemyHealth;
-    console.log("combatAttack.enemyHealthbefore " + enemyHealth);
     enemyHealth -= playerDamageToEnemy;
     gameData.currentEnemyHealth = enemyHealth;
-    console.log("combatAttack.enemyHealthafter " + enemyHealth);
     
     if(hasTempered && gameData.bossFirstTurn)
     {
@@ -571,7 +565,7 @@ function combatAttack(type)
         }
         newEnemy(gameData.currentLocation);
     }
-    if(enemyHealth <= 0 && gameData.currentEnemyType == 1)
+    else if(enemyHealth <= 0 && gameData.currentEnemyType == 1)
     {
         addToKills();
         setGold(playerData.gold + randomIntFromInterval(35,50));
